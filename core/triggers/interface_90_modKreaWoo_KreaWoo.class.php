@@ -1,0 +1,1041 @@
+<?php
+/* Copyright (C) 2010      Franck Charpentier - Auguria <franck.charpentier@auguria.net>
+ * Copyright (C) 2013-2016 Laurent Destailleur          <eldy@users.sourceforge.net>
+ * Copyright (C) 2026      Kreativität Works                     <support@kreativitat.com>
+ * Copyright (C) 2026  Kreativitat  <mail@kreativitat.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * or see http://www.gnu.org/
+ */
+
+
+dol_include_once('/kreawoo/class/business/kreawooSynchro.class.php');
+dol_include_once('/kreawoo/class/business/kreawooUtils.class.php');
+
+require_once(DOL_DOCUMENT_ROOT.'/expedition/class/expedition.class.php');
+
+class InterfaceKreaWoo
+{
+	private $db;
+	private $name;
+	private $description;
+	private $version;
+
+	public $family;
+	public $errors;
+
+	/**
+	 *   This class is a trigger on delivery to update delivery on kreawoo Site
+	 *
+	 *   @param      DoliDB		$db      Handler database access
+	 */
+	public function __construct($db)
+	{
+		$this->db = $db;
+
+		$this->name = preg_replace('/^Interface/i','',get_class($this));
+		$this->family = "Kreativität Works";
+		$this->description = "Triggers of this module update delivery on kreawoo Site according to order status.";
+		$this->version = '1.0';
+	}
+
+
+	/**
+	 *   Renvoi nom du lot de triggers
+	 *   @return     string      Nom du lot de triggers
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	/**
+	 *   Renvoi descriptif du lot de triggers
+	 *   @return     string      Descriptif du lot de triggers
+	 */
+	public function getDesc()
+	{
+		return $this->description;
+	}
+
+	/**
+	 *   Renvoi version du lot de triggers
+	 *   @return     string      Version du lot de triggers
+	 */
+	public function getVersion()
+	{
+		global $langs;
+		$langs->load("admin");
+
+		if ($this->version == 'development') return $langs->trans("Development");
+		elseif ($this->version == 'experimental') return $langs->trans("Experimental");
+		elseif ($this->version == 'dolibarr') return DOL_VERSION;
+		elseif ($this->version) return $this->version;
+		else return $langs->trans("Unknown");
+	}
+
+	/**
+	 *      Fonction appelee lors du declenchement d'un evenement Dolibarr.
+	 *      D'autres fonctions run_trigger peuvent etre presentes dans includes/triggers
+	 *
+	 *      @param      string      $action      Code de l'evenement
+	 *      @param      Object      $object      Objet concerne
+	 *      @param      User        $user        Objet user
+	 *      @param      Translate   $langs       Objet lang
+	 *      @param      Conf        $conf        Objet conf
+	 *      @return     int                      <0 if fatal error, 0 si nothing done, >0 if ok
+	 */
+	public function runTrigger($action,$object,$user,$langs,$conf)
+	{
+		if (empty($conf->kreawoo->enabled)) return 0;     // Module not active, we do nothing
+
+		$error = 0;
+
+		$link_object = null;
+		$link_action = '';
+		if ($action == 'CATEGORY_LINK') {
+			$link_to = null;
+			if (isset($object->linkto)) {
+				$link_to = $object->linkto;
+			} elseif (isset($object->context['linkto'])) {
+				$link_to = $object->context['linkto'];
+			}
+			if (isset($link_to->element)) {
+				switch ($link_to->element) {
+					case 'product':
+						$link_action = 'PRODUCT_MODIFY';
+						$link_object = $link_to;
+						break;
+				}
+			}
+		}
+
+		if ($action == 'COMPANY_CREATE') {
+
+		}
+
+		if ($action == 'CONTACT_CREATE') {
+
+		}
+
+		if ($action == 'COMPANY_MODIFY') {
+			if ($object->element != 'societe') {
+				$error_msg = "Trigger : Object element (" . $object->element . ") is not a societe for the action " . $action;
+				dol_syslog($error_msg, LOG_ERR);
+				$this->errors[] = $error_msg;
+				return -1;
+			}
+			$this->db->begin();
+
+			$save_entity = $conf->entity;
+			$stopwatch_id = kreawooUtils::startAndLogStopwatch(__METHOD__ . " - Action {$action} (ID: {$object->id})");
+
+			if ($object->context['merge'] == 1) {
+				$merge_from_id = $object->context['mergefromid'];
+
+				// Update all company link
+				$sql = "UPDATE " . MAIN_DB_PREFIX . "kreawoo_societe SET fk_societe = " . $object->id . " WHERE fk_societe = " . $merge_from_id;
+
+				$resql = $this->db->query($sql);
+				if (!$resql) {
+					$error++;
+					$error_msg = $langs->trans('kreawooUpdateRemoteCompanyLinkWhenMergeCompany', $merge_from_id, $object->id, $this->db->lasterror());
+					$this->errors[] = "Error " . $this->db->lasterror();
+					dol_syslog(__METHOD__ . ' SQL: ' . $sql . '; Error:' . $error_msg, LOG_ERR);
+				}
+			} else {
+				$kreawooSite = new kreawooSite($this->db);
+				$sites = $kreawooSite->listSites('object');
+				$entities = explode(',', getEntity('societe'));
+
+				foreach ($sites as $site) {
+					if ($object->context['fromsyncofecommerceid'] && $object->context['fromsyncofecommerceid'] == $site->id) {
+						dol_syslog("Triggers was ran from a create/update to sync from ecommerce to dolibarr, so we won't run code to sync from dolibarr to ecommerce");
+						continue;
+					}
+
+					if (!$error) {
+						if (empty($site->parameters['realtime_dtoe']['thridparty'])) {
+							dol_syslog("Triggers disabled from the config of the module");
+							continue;
+						}
+
+						if (!in_array($site->entity, $entities)) {
+							dol_syslog("Site '{$site->name}' not in the shared entities");
+							continue;
+						}
+
+						$site->setEntityValues($site->entity);
+
+						$kreawooSociete = new kreawooSociete($this->db);
+						$links_list = $kreawooSociete->getAllLinksByFkSociete($object->id, $site->id);
+						if (!is_array($links_list)) {
+							setEventMessages($kreawooSociete->error, $kreawooSociete->errors, 'errors');
+							$error++;
+						}
+
+						if (!$error) {
+							if (empty($links_list)) {
+								// Get current categories
+								require_once DOL_DOCUMENT_ROOT . '/categories/class/categorie.class.php';
+								$c = new Categorie($this->db);
+								$catids = $c->containing($object->id, Categorie::TYPE_CUSTOMER, 'id');
+
+								if (in_array($site->fk_cat_societe, $catids)) {
+									dol_syslog("Societe with id " . $object->id . " is not linked to an ecommerce record but has category flag to push on kreawoo. So we push it");
+									// TODO
+									/*$kreawooSynchro = new kreawooSynchro($this->db, $site);
+									dol_syslog("Trigger ".$action." try to connect to kreawoo site ".$site->name);
+									$kreawooSynchro->connect();
+									if (count($kreawooSynchro->errors))
+									{
+										$error++;
+										setEventMessages($kreawooSynchro->error, $kreawooSynchro->errors, 'errors');
+									}
+
+									if (! $error)
+									{
+										$result = $kreawooSynchro->kreawooRemoteAccess->updateRemoteProduct($kreawooProduct->remote_id);
+									}*/
+								} else {
+									dol_syslog("Societe with id " . $object->id . " is not linked to an ecommerce record and does not has category flag to push on kreawoo.");
+								}
+							} else {
+								foreach ($links_list as $link) {
+									$kreawooSynchro = new kreawooSynchro($this->db, $site);
+									dol_syslog("Trigger " . $action . " try to connect to kreawoo site " . $site->name);
+									$kreawooSynchro->connect();
+									if (count($kreawooSynchro->errors)) {
+										$error++;
+										setEventMessages($kreawooSynchro->error, $kreawooSynchro->errors, 'errors');
+									}
+
+									if (!$error) {
+										$result = $kreawooSynchro->kreawooRemoteAccess->updateRemoteSociete($link->remote_id, $object);
+										$now = dol_now();
+										if (!$result) {
+											$error++;
+											$this->errors[] = $kreawooSynchro->kreawooRemoteAccess->error;
+											$this->errors = array_merge($this->errors, $kreawooSynchro->kreawooRemoteAccess->errors);
+										}
+									}
+
+									if (!$error) {
+										//kreawoo update link
+										$link->last_update = dol_print_date($now, '%Y-%m-%d %H:%M:%S');
+										if ($link->update($user) < 0) {
+											$error++;
+											$error_msg = $langs->trans('kreawooUpdateRemoteCompanyLink', $object->id, $site->name, $link->error);
+											$this->errors[] = $error_msg;
+											$this->errors = array_merge($this->errors, $link->errors);
+											dol_syslog(__METHOD__ . ': Error:' . $error_msg, LOG_WARNING);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			kreawooUtils::stopAndLogStopwatch($stopwatch_id);
+			if (isset($site)) $site->setEntityValues($save_entity);
+
+			if ($error) {
+				$this->db->rollback();
+				return -1;
+			} else {
+				$this->db->commit();
+				return 1;
+			}
+		}
+
+		if ($action == 'CONTACT_MODIFY') {
+			if ($object->element != 'contact') {
+				$error_msg = "Trigger : Object element (" . $object->element . ") is not a contact for the action " . $action;
+				dol_syslog($error_msg, LOG_ERR);
+				$this->errors[] = $error_msg;
+				return -1;
+			}
+			$this->db->begin();
+
+			$save_entity = $conf->entity;
+			$stopwatch_id = kreawooUtils::startAndLogStopwatch(__METHOD__ . " - Action {$action} (ID: {$object->id})");
+
+			$kreawooSite = new kreawooSite($this->db);
+			$sites = $kreawooSite->listSites('object');
+			$entities = explode(',', getEntity('socpeople'));
+
+			foreach ($sites as $site) {
+				if ($object->context['fromsyncofecommerceid'] && $object->context['fromsyncofecommerceid'] == $site->id) {
+					dol_syslog("Triggers was ran from a create/update to sync from ecommerce to dolibarr, so we won't run code to sync from dolibarr to ecommerce");
+					continue;
+				}
+
+				if (!$error) {
+					if (empty($site->parameters['realtime_dtoe']['contact'])) {
+						dol_syslog("Triggers disabled from the config of the module");
+						continue;
+					}
+
+					if (!in_array($site->entity, $entities)) {
+						dol_syslog("Site '{$site->name}' not in the shared entities");
+						continue;
+					}
+
+					$site->setEntityValues($site->entity);
+
+					$kreawooSocpeople = new kreawooSocpeople($this->db);
+					$kreawooSocpeople->fetchByFkSocpeople($object->id, $site->id);
+
+					if (!empty($kreawooSocpeople->remote_id) && $kreawooSocpeople->remote_id > 0) {
+						$kreawooSynchro = new kreawooSynchro($this->db, $site);
+						dol_syslog("Trigger " . $action . " try to connect to kreawoo site " . $site->name);
+						$kreawooSynchro->connect();
+						if (count($kreawooSynchro->errors)) {
+							$error++;
+							setEventMessages($kreawooSynchro->error, $kreawooSynchro->errors, 'errors');
+						}
+
+						if (!$error) {
+							$result = $kreawooSynchro->kreawooRemoteAccess->updateRemoteSocpeople($kreawooSocpeople->remote_id, $object);
+							$now = dol_now();
+							if (!$result) {
+								$error++;
+								$this->errors[] = $kreawooSynchro->kreawooRemoteAccess->error;
+								$this->errors = array_merge($this->errors, $kreawooSynchro->kreawooRemoteAccess->errors);
+							}
+						}
+
+						if (!$error) {
+							//kreawoo update link
+							$kreawooSocpeople->last_update = dol_print_date($now, '%Y-%m-%d %H:%M:%S');
+							if ($kreawooSocpeople->update($user) < 0) {
+								$error++;
+								$error_msg = $langs->trans('kreawooUpdateRemoteSocpeopleLink', $object->id, $site->name, $kreawooSocpeople->error);
+								$this->errors[] = $error_msg;
+								$this->errors = array_merge($this->errors, $kreawooSocpeople->errors);
+								dol_syslog(__METHOD__ . ': Error:' . $error_msg, LOG_WARNING);
+							}
+						}
+					} else {
+						// Get current categories
+						require_once DOL_DOCUMENT_ROOT . '/categories/class/categorie.class.php';
+						$c = new Categorie($this->db);
+						$catids = $c->containing($object->fk_soc, Categorie::TYPE_CUSTOMER, 'id');
+
+						if (in_array($site->fk_cat_societe, $catids)) {
+							dol_syslog("Contact with id " . $object->id . " of societe with id " . $object->fk_soc . " is not linked to an ecommerce record but has category flag to push on kreawoo. So we push it");
+							// TODO
+							//$result = $kreawooSynchro->kreawooRemoteAccess->updateRemoteProduct($kreawooProduct->remote_id);
+						} else {
+							dol_syslog("Contact with id " . $object->id . " of societe with id " . $object->fk_soc . " is not linked to an ecommerce record and does not has category flag to push on kreawoo.");
+						}
+					}
+				}
+			}
+
+			kreawooUtils::stopAndLogStopwatch($stopwatch_id);
+			if (isset($site)) $site->setEntityValues($save_entity);
+
+			if ($error) {
+				$this->db->rollback();
+				return -1;
+			} else {
+				$this->db->commit();
+				return 1;
+			}
+		}
+
+		if ($action == 'PRODUCT_MODIFY' || $action == 'PRODUCT_PRICE_MODIFY' || $action == 'PRODUCT_SET_MULTILANGS' || ($link_action == 'PRODUCT_MODIFY' && is_object($link_object))) {
+			if ($link_action == 'PRODUCT_MODIFY') {
+				$object_to_process = $link_object;
+			} else {
+				$object_to_process = $object;
+			}
+
+			if ($object_to_process->element != 'product') {
+				$error_msg = "Trigger : Object element (" . $object_to_process->element . ") is not a product for the action " . $action;
+				dol_syslog($error_msg, LOG_ERR);
+				$this->errors[] = $error_msg;
+				return -1;
+			}
+			if (!empty($object_to_process->context['skip_kreawoo_realtime_sync'])) {
+				dol_syslog(__METHOD__ . ' skipped realtime synchronization for transactional product update id=' . (int) $object_to_process->id, LOG_DEBUG);
+				return 0;
+			}
+			$this->db->begin();
+
+			/**
+			 * @var Product $object_to_process
+			 */
+
+			$save_entity = $conf->entity;
+			$stopwatch_id = kreawooUtils::startAndLogStopwatch(__METHOD__ . " - Action {$action} (ID: {$object_to_process->id})");
+
+			// Get current categories and subcategories
+			require_once DOL_DOCUMENT_ROOT . '/categories/class/categorie.class.php';
+			$c = new Categorie($this->db);
+			$categories = array();
+			if (GETPOSTISSET('categories')) {
+				$cats = GETPOSTISARRAY('categories') ? GETPOST('categories', 'array:int') : array(GETPOSTINT('categories'));
+				$cats = array_values(array_unique(array_filter(array_map('intval', $cats))));
+				$object_to_process->context['kreawoo_product_category_ids'] = $cats;
+			} else {
+				$cats = $c->containing($object_to_process->id, Categorie::TYPE_PRODUCT, 'id');
+			}
+			foreach ($cats as $cat) {
+				$c->id = $cat;
+				$catslist = $c->get_all_ways();
+				if (isset($catslist[0])) {
+					foreach ($catslist[0] as $catinfos) {
+						$categories[$catinfos->id] = $catinfos->id;
+					}
+				}
+			}
+
+			$kreawooSite = new kreawooSite($this->db);
+			$sites = $kreawooSite->listSites('object');
+			$entities = explode(',', getEntity('product'));
+			$object_to_process->context['ec_price_entities'] = explode(',', getEntity('productprice'));
+
+			foreach ($sites as $site) {
+				if (!in_array($site->fk_cat_product, $categories)) {
+					dol_syslog("Product not in categorie now, so we won't run code to sync from dolibarr to ecommerce");
+					continue;
+				}
+
+				if (isset($object_to_process->context['fromsyncofecommerceid']) && $object_to_process->context['fromsyncofecommerceid'] == $site->id) {
+					dol_syslog("Triggers was ran from a create/update to sync from ecommerce to dolibarr, so we won't run code to sync from dolibarr to ecommerce");
+					continue;
+				}
+
+				if (!in_array($site->entity, $entities)) {
+					dol_syslog("Site '{$site->name}' not in the shared entities");
+					continue;
+				}
+
+				if (!$error) {
+					if (empty($site->parameters['realtime_dtoe']['product'])) {
+						dol_syslog("Triggers disabled from the config of the module");
+						continue;
+					}
+
+					$site->setEntityValues($site->entity);
+
+					$kreawooProduct = new kreawooProduct($this->db);
+					$fetchProductLinkResult = $kreawooProduct->fetchByProductId($object_to_process->id, $site->id, true);
+					if ($fetchProductLinkResult < 0) {
+						$error++;
+						$this->errors[] = $kreawooProduct->error;
+						$this->errors = array_merge($this->errors, $kreawooProduct->errors);
+						continue;
+					}
+
+					// Todo to comment ? if multicurrency not working ?
+					$old_price = $object_to_process->price;
+					if (!empty($conf->global->PRODUIT_MULTIPRICES)) {
+						$object_to_process->price = $object_to_process->multiprices[$site->price_level];
+					}
+
+					if ($kreawooProduct->remote_id > 0) {
+						$kreawooSynchro = new kreawooSynchro($this->db, $site);
+						dol_syslog("Trigger " . $action . " try to connect to kreawoo site " . $site->name);
+						$kreawooSynchro->connect();
+						if (count($kreawooSynchro->errors)) {
+							$error++;
+							setEventMessages($kreawooSynchro->error, $kreawooSynchro->errors, 'errors');
+						}
+
+						if (!$error) {
+							$result = $kreawooSynchro->kreawooRemoteAccess->updateRemoteProduct($kreawooProduct->remote_id, $object_to_process);
+							if (!$result) {
+								$error++;
+								$this->errors[] = $kreawooSynchro->kreawooRemoteAccess->error;
+								$this->errors = array_merge($this->errors, $kreawooSynchro->kreawooRemoteAccess->errors);
+							} else {
+								$last_update_date = $result['last_update_date'];
+							}
+						}
+					} else {
+						dol_syslog("Product with id " . $object_to_process->id . " is not linked to an ecommerce record but has category flag to push on kreawoo. So we push it");
+
+						$kreawooSynchro = new kreawooSynchro($this->db, $site);
+						dol_syslog("Trigger " . $action . " try to connect to kreawoo site " . $site->name);
+						$kreawooSynchro->connect();
+						if (count($kreawooSynchro->errors)) {
+							$error++;
+							setEventMessages($kreawooSynchro->error, $kreawooSynchro->errors, 'errors');
+						}
+
+						$result = $kreawooSynchro->kreawooRemoteAccess->createRemoteProduct($object_to_process);
+						if (!$result) {
+							$error++;
+							$this->errors[] = $kreawooSynchro->kreawooRemoteAccess->error;
+							$this->errors = array_merge($this->errors, $kreawooSynchro->kreawooRemoteAccess->errors);
+						} else {
+							$last_update_date = $result['last_update_date'];
+
+							// Todo to comment ? if multicurrency not working ?
+							$object_to_process->price = $old_price;
+
+							$remote_id = $result['remote_id'];
+							$object_to_process->url = $result['remote_url'];
+							$object_to_process->context['fromsyncofecommerceid'] = $site->id;
+							$result = $object_to_process->update($object_to_process->id, $user);
+							if ($result < 0) {
+								$error++;
+								$error_msg = $langs->trans('kreawooUpdateProduct');
+								$this->errors[] = $error_msg;
+								$this->errors = array_merge($this->errors, $object_to_process->errors);
+								dol_syslog(__METHOD__ . ': Error:' . $error_msg, LOG_WARNING);
+							}
+						}
+					}
+
+					// Todo to comment ? if multicurrency not working ?
+					$object_to_process->price = $old_price;
+
+					if (!$error) {
+						$kreawooProduct->last_update = dol_print_date(max($last_update_date, dol_now()), '%Y-%m-%d %H:%M:%S');
+						if ($site->stock_sync_direction == 'dolibarr2ecommerce') $kreawooProduct->last_update_stock = $kreawooProduct->last_update;
+
+						if ($kreawooProduct->id > 0) {
+							// Update remote link
+							$res = $kreawooProduct->update($user);
+						} else {
+							// Create remote link
+							$kreawooProduct->fk_product = $object_to_process->id;
+							$kreawooProduct->fk_site = $site->id;
+							$kreawooProduct->remote_id = $remote_id;
+							$res = $kreawooProduct->create($user);
+						}
+						if ($res < 0) {
+							$error++;
+							$error_msg = $langs->trans($kreawooProduct->id > 0 ? 'kreawooUpdateRemoteProductLink' : 'kreawooCreateRemoteProductLink', $object_to_process->id, $site->name, $kreawooProduct->error);
+							$this->errors[] = $error_msg;
+							$this->errors = array_merge($this->errors, $kreawooProduct->errors);
+							dol_syslog(__METHOD__ . ': Error:' . $error_msg, LOG_WARNING);
+						} else {
+							// Maj date product avec date de modif sur ecommerce
+							$sql = "UPDATE " . MAIN_DB_PREFIX . "product SET tms = '" . $kreawooProduct->last_update . "' WHERE rowid = " . $object_to_process->id;
+							$resql = $this->db->query($sql);
+							if (!$resql) {
+								$error++;
+								// Todo traduction du texte de l'erreur
+								$this->error = 'Error update modification date of product "' . $object_to_process->ref . '" : ' . $this->db->lasterror();
+								$this->errors[] = $this->error;
+							}
+						}
+					}
+				}
+			}
+
+			kreawooUtils::stopAndLogStopwatch($stopwatch_id);
+			if (isset($site)) $site->setEntityValues($save_entity);
+
+			if ($error) {
+				$this->db->rollback();
+				return -1;
+			} else {
+				$this->db->commit();
+				return 1;
+			}
+		}
+
+
+		if ($action == 'ORDER_MODIFY' || $action == 'ORDER_CLOSE' || $action == 'ORDER_CLASSIFY_BILLED' ||
+			$action == 'ORDER_VALIDATE' || $action == 'ORDER_UNVALIDATE' || $action == 'ORDER_REOPEN' ||
+			$action == 'ORDER_CANCEL' || $action == 'ORDER_CLASSIFY_UNBILLED') {
+			$obj = $object;
+			if ($obj->element == 'shipping') {
+				if ($object->origin == 'commande') {
+					require_once DOL_DOCUMENT_ROOT . '/commande/class/commande.class.php';
+					$obj = new Commande($this->db);
+					$obj->fetch($object->origin_id);
+				}
+			}
+			if ($obj->element != 'commande') {
+				$error_msg = "Trigger : Object element (" . $obj->element . ") is not a commande for the action " . $action;
+				dol_syslog($error_msg, LOG_ERR);
+				$this->errors[] = $error_msg;
+				return -1;
+			}
+
+			$this->db->begin();
+
+			$save_entity = $conf->entity;
+			$stopwatch_id = kreawooUtils::startAndLogStopwatch(__METHOD__ . " - Action {$action} (ID: {$object->id})");
+
+			switch ($action) {
+				case 'ORDER_VALIDATE':
+					$obj->statut = Commande::STATUS_VALIDATED;
+					break;
+				case 'ORDER_UNVALIDATE':
+					$obj->statut = Commande::STATUS_DRAFT;
+					break;
+				case 'ORDER_REOPEN':
+					$obj->statut = Commande::STATUS_DRAFT;
+					break;
+				case 'ORDER_CLOSE':
+					$obj->statut = Commande::STATUS_CLOSED;
+					break;
+				case 'ORDER_CANCEL':
+					$obj->statut = Commande::STATUS_CANCELED;
+					break;
+			}
+
+			$kreawooSite = new kreawooSite($this->db);
+			$sites = $kreawooSite->listSites('object');
+			$entities = explode(',', getEntity('commande'));
+
+			foreach ($sites as $site) {
+				if (isset($obj->context['fromsyncofecommerceid']) && $obj->context['fromsyncofecommerceid'] == $site->id) {
+					dol_syslog("Triggers was ran from a create/update to sync from ecommerce to dolibarr, so we won't run code to sync from dolibarr to ecommerce");
+					continue;
+				}
+
+				if (empty($site->parameters['realtime_dtoe']['order'])) {
+					dol_syslog("Triggers disabled from the config of the module");
+					continue;
+				}
+
+				if (!in_array($site->entity, $entities)) {
+					dol_syslog("Site '{$site->name}' not in the shared entities");
+					continue;
+				}
+
+				if (!$error) {
+					$site->setEntityValues($site->entity);
+
+					$kreawooCommande = new kreawooCommande($this->db);
+					$kreawooCommande->fetchByCommandeId($obj->id, $site->id);
+
+					if ($kreawooCommande->remote_id > 0) {
+						$kreawooSynchro = new kreawooSynchro($this->db, $site);
+						dol_syslog("Trigger " . $action . " try to connect to kreawoo site " . $site->name);
+						$kreawooSynchro->connect();
+						if (count($kreawooSynchro->errors)) {
+							$error++;
+							setEventMessages($kreawooSynchro->error, $kreawooSynchro->errors, 'errors');
+						}
+
+						if (!$error) {
+							$result = $kreawooSynchro->kreawooRemoteAccess->updateRemoteCommande($kreawooCommande->remote_id, $obj);
+							$now = dol_now();
+							if (!$result) {
+								$error++;
+								$this->errors[] = $kreawooSynchro->kreawooRemoteAccess->error;
+								$this->errors = array_merge($this->errors, $kreawooSynchro->kreawooRemoteAccess->errors);
+							}
+						}
+
+						if (!$error) {
+							//kreawoo update link
+							$kreawooCommande->last_update = dol_print_date($now, '%Y-%m-%d %H:%M:%S');
+							if ($kreawooCommande->update($user) < 0) {
+								$error++;
+								$error_msg = $langs->trans('kreawooUpdateRemoteOrderLink', $obj->id, $site->name, $kreawooCommande->error);
+								$this->errors[] = $error_msg;
+								$this->errors = array_merge($this->errors, $kreawooCommande->errors);
+								dol_syslog(__METHOD__ . ': Error:' . $error_msg, LOG_WARNING);
+							}
+						}
+					} else {
+						dol_syslog("Order with id " . $obj->id . " is not linked to an ecommerce record so we don't sync it.");
+					}
+				}
+			}
+
+			kreawooUtils::stopAndLogStopwatch($stopwatch_id);
+			if (isset($site)) $site->setEntityValues($save_entity);
+
+			if ($error) {
+				$this->db->rollback();
+				return -1;
+			} else {
+				$this->db->commit();
+				return 1;
+			}
+		}
+
+		if ($action == 'BILL_MODIFY') {
+			if (get_class($object) != 'Facture') {
+				$error_msg = "Trigger : KreaWoo: Object (" . get_class($object) . ") is not a Facture for the action " . $action;
+				dol_syslog($error_msg, LOG_ERR);
+				$this->errors[] = $error_msg;
+				return -1;
+			}
+			$this->db->begin();
+
+			$save_entity = $conf->entity;
+			$stopwatch_id = kreawooUtils::startAndLogStopwatch(__METHOD__ . " - Action {$action} (ID: {$object->id})");
+
+			$kreawooSite = new kreawooSite($this->db);
+			$sites = $kreawooSite->listSites('object');
+			$entities = explode(',', getEntity('facture'));
+			foreach ($sites as $site) {
+				if (isset($object->context['fromsyncofecommerceid']) && $object->context['fromsyncofecommerceid'] == $site->id) {
+					dol_syslog("Triggers was ran from a create/update to sync from ecommerce to dolibarr, so we won't run code to sync from dolibarr to ecommerce");
+					continue;
+				}
+
+				if (!$error) {
+					if (empty($site->parameters['realtime_dtoe']['order'])) {
+						dol_syslog("Triggers disabled from the config of the module");
+						continue;
+					}
+
+					if (!in_array($site->entity, $entities)) {
+						dol_syslog("Site '{$site->name}' not in the shared entities");
+						continue;
+					}
+
+					$site->setEntityValues($site->entity);
+
+					$kreawooFacture = new kreawooFacture($this->db);
+					$kreawooFacture->fetchByFactureId($object->id, $site->id);
+
+					if ($kreawooFacture->remote_id > 0) {
+						$kreawooSynchro = new kreawooSynchro($this->db, $site);
+						dol_syslog("Trigger " . $action . " try to connect to kreawoo site " . $site->name);
+						$kreawooSynchro->connect();
+						if (count($kreawooSynchro->errors)) {
+							$error++;
+							setEventMessages($kreawooSynchro->error, $kreawooSynchro->errors, 'errors');
+						}
+
+						if (!$error) {
+							$result = $kreawooSynchro->kreawooRemoteAccess->updateRemoteFacture($kreawooFacture->remote_id, $object);
+							$now = dol_now();
+							if (!$result) {
+								$error++;
+								$this->errors[] = $kreawooSynchro->kreawooRemoteAccess->error;
+								$this->errors = array_merge($this->errors, $kreawooSynchro->kreawooRemoteAccess->errors);
+							}
+						}
+
+						if (!$error) {
+							//kreawoo update link
+							$kreawooFacture->last_update = dol_print_date($now, '%Y-%m-%d %H:%M:%S');
+							if ($kreawooFacture->update($user) < 0) {
+								$error++;
+								$error_msg = $langs->trans('kreawooUpdateRemoteInvoiceLink', $object->id, $site->name, $kreawooFacture->error);
+								$this->errors[] = $error_msg;
+								$this->errors = array_merge($this->errors, $kreawooFacture->errors);
+								dol_syslog(__METHOD__ . ': Error:' . $error_msg, LOG_WARNING);
+							}
+						}
+					} else {
+						dol_syslog("Order with id " . $object->id . " is not linked to an ecommerce record so we don't sync it.");
+					}
+				}
+			}
+
+			kreawooUtils::stopAndLogStopwatch($stopwatch_id);
+			if (isset($site)) $site->setEntityValues($save_entity);
+
+			if ($error) {
+				$this->db->rollback();
+				return -1;
+			} else {
+				$this->db->commit();
+				return 1;
+			}
+		}
+
+
+		/* Delete */
+
+		if ($action == 'CATEGORY_DELETE' && ((int)$object->type == 0))     // Product category
+		{
+			if ($object->element != 'category') {
+				$error_msg = "Trigger : Object element (" . $object->element . ") is not a category for the action " . $action;
+				dol_syslog($error_msg, LOG_ERR);
+				$this->errors[] = $error_msg;
+				return -1;
+			}
+			$this->db->begin();
+
+			// TODO If product category and oldest parent is category for magento then delete category into magento.
+
+			$sql = "SELECT remote_id, remote_parent_id FROM " . MAIN_DB_PREFIX . "kreawoo_category WHERE fk_category = " . $this->db->escape($object->id) . " AND type = 0";
+			$resql = $this->db->query($sql);
+			if ($resql) {
+				$obj = $this->db->fetch_object($resql);
+				if ($obj)   // If null = we didn't find category, so it is not a category known into ecommerce platform
+				{
+					$remote_parent_id = $obj->remote_parent_id;
+					$remote_id = $obj->remote_id;
+					// Update all record that are under the one deleted to have a parent that is over the one deleted
+					$sql = "UPDATE " . MAIN_DB_PREFIX . "kreawoo_category SET last_update = NULL, remote_parent_id = " . $remote_parent_id . " WHERE remote_parent_id = " . $remote_id;
+					$resql = $this->db->query($sql);
+					if (!$resql) {
+						$error++;
+					}
+				}
+			}
+			if (!$error) {
+				$sql = "DELETE FROM " . MAIN_DB_PREFIX . "kreawoo_category WHERE fk_category = " . $this->db->escape($object->id) . " AND type = 0";
+
+				$resql = $this->db->query($sql);
+				if (!$resql) {
+					$error++;
+				}
+			}
+
+			if ($error) {
+				$this->db->rollback();
+				return -1;
+			} else {
+				$this->db->commit();
+				return 1;
+			}
+		}
+
+
+		if ($action == 'COMPANY_DELETE') {
+			if ($object->element != 'societe') {
+				$error_msg = "Trigger : Object element (" . $object->element . ") is not a societe for the action " . $action;
+				dol_syslog($error_msg, LOG_ERR);
+				$this->errors[] = $error_msg;
+				return -1;
+			}
+			$this->db->begin();
+
+			$sql = "DELETE FROM " . MAIN_DB_PREFIX . "kreawoo_socpeople WHERE fk_socpeople IN (SELECT rowid FROM " . MAIN_DB_PREFIX . "socpeople WHERE fk_soc = '" . $this->db->escape($object->id) . "')";
+			$resql = $this->db->query($sql);
+			if (!$resql) {
+				$this->errors[] = $this->db->lasterror();
+				$error++;
+			}
+
+			$sql = "DELETE FROM " . MAIN_DB_PREFIX . "kreawoo_societe WHERE fk_societe ='" . $this->db->escape($object->id) . "'";
+			$resql = $this->db->query($sql);
+			if (!$resql) {
+				$this->errors[] = $this->db->lasterror();
+				$error++;
+			}
+
+			if ($error) {
+				$this->db->rollback();
+				return -1;
+			} else {
+				$this->db->commit();
+				return 1;
+			}
+		}
+
+		if ($action == 'CONTACT_DELETE') {
+			if ($object->element != 'contact') {
+				$error_msg = "Trigger : Object element (" . $object->element . ") is not a contact for the action " . $action;
+				dol_syslog($error_msg, LOG_ERR);
+				$this->errors[] = $error_msg;
+				return -1;
+			}
+			$this->db->begin();
+
+			$sql = "DELETE FROM " . MAIN_DB_PREFIX . "kreawoo_socpeople WHERE fk_socpeople = '" . $this->db->escape($object->id) . "'";
+			$resql = $this->db->query($sql);
+			if (!$resql) {
+				$this->errors[] = $this->db->lasterror();
+				$error++;
+			}
+
+			if ($error) {
+				$this->db->rollback();
+				return -1;
+			} else {
+				$this->db->commit();
+				return 1;
+			}
+		}
+
+		if ($action == 'ORDER_DELETE') {
+			if ($object->element != 'commande') {
+				$error_msg = "Trigger : Object element (" . $object->element . ") is not a commande for the action " . $action;
+				dol_syslog($error_msg, LOG_ERR);
+				$this->errors[] = $error_msg;
+				return -1;
+			}
+			$this->db->begin();
+
+			$sql = "DELETE FROM " . MAIN_DB_PREFIX . "kreawoo_commande WHERE fk_commande = '" . $this->db->escape($object->id) . "'";
+			$resql = $this->db->query($sql);
+			if (!$resql) {
+				$this->errors[] = $this->db->lasterror();
+				$error++;
+			}
+
+			if ($error) {
+				$this->db->rollback();
+				return -1;
+			} else {
+				$this->db->commit();
+				return 1;
+			}
+		}
+
+		if ($action == 'BILL_DELETE') {
+			if ($object->element != 'facture') {
+				$error_msg = "Trigger : Object element (" . $object->element . ") is not a facture for the action " . $action;
+				dol_syslog($error_msg, LOG_ERR);
+				$this->errors[] = $error_msg;
+				return -1;
+			}
+			$this->db->begin();
+
+			$sql = "DELETE FROM " . MAIN_DB_PREFIX . "kreawoo_facture WHERE fk_facture = '" . $this->db->escape($object->id) . "'";
+			$resql = $this->db->query($sql);
+			if (!$resql) {
+				$this->errors[] = $this->db->lasterror();
+				$error++;
+			}
+
+			if (!$error) {
+				$sql = "DELETE FROM " . MAIN_DB_PREFIX . "kreawoo_commande WHERE fk_commande = '" . $this->db->escape(-$object->id) . "'";
+				$resql = $this->db->query($sql);
+				if (!$resql) {
+					$this->errors[] = $this->db->lasterror();
+					$error++;
+				}
+			}
+
+			if ($error) {
+				$this->db->rollback();
+				return -1;
+			} else {
+				$this->db->commit();
+				return 1;
+			}
+		}
+
+
+		// A shipment is validated, it means order has status "In process"
+		if ($action == 'SHIPPING_VALIDATE') {
+			if ($object->element != 'shipping') {
+				$error_msg = "Trigger : Object element (" . $object->element . ") is not a shipping for the action " . $action;
+				dol_syslog($error_msg, LOG_ERR);
+				$this->errors[] = $error_msg;
+				return -1;
+			}
+			dol_syslog("Trigger '" . $this->name . "' for action '$action' launched by " . __FILE__ . ". id=" . $object->id);
+
+			$this->db->begin();
+
+			$save_entity = $conf->entity;
+			$stopwatch_id = kreawooUtils::startAndLogStopwatch(__METHOD__ . " - Action {$action} (ID: {$object->id})");
+
+			$kreawooSite = new kreawooSite($this->db);
+			$sites = $kreawooSite->listSites('object');
+			$entities = explode(',', getEntity('expedition'));
+
+			foreach ($sites as $site) {
+				if ($object->context['fromsyncofecommerceid'] && $object->context['fromsyncofecommerceid'] == $site->id) {
+					dol_syslog("Triggers was ran from a create/update to sync from ecommerce to dolibarr, so we won't run code to sync from dolibarr to ecommerce");
+					continue;
+				}
+
+				if (empty($site->parameters['realtime_dtoe']['order'])) {
+					dol_syslog("Triggers disabled from the config of the module");
+					continue;
+				}
+
+				if (!in_array($site->entity, $entities)) {
+					dol_syslog("Site '{$site->name}' not in the shared entities");
+					continue;
+				}
+
+				$site->setEntityValues($site->entity);
+
+				try {
+					//retrieve shipping id
+					$shippingId = $object->id;
+
+					$origin = $object->origin;
+					$origin_id = $object->origin_id;
+
+					$orderId = $origin_id;
+
+					//load kreawoo Commande by order id
+					$kreawooCommande = new kreawooCommande($this->db);
+					$kreawooCommande->fetchByCommandeId($orderId, $site->id);
+
+					if (isset($kreawooCommande->remote_id) && $kreawooCommande->remote_id > 0) {
+						$kreawooSynchro = new kreawooSynchro($this->db, $site);
+						dol_syslog("Trigger " . $action . " try to connect to kreawoo site " . $site->name);
+						$kreawooSynchro->connect();
+						if (count($kreawooSynchro->errors)) {
+							$error++;
+							setEventMessages($kreawooSynchro->error, $kreawooSynchro->errors, 'errors');
+						}
+
+						if (!$error) {
+							dol_syslog("Trigger " . $action . " call synchLivraison for object shipment id = " . $object->id . " and order id = " . $origin_id . ", order remote id = " . $kreawooCommande->remote_id);
+							$result = $kreawooSynchro->synchLivraison($object, $kreawooCommande->remote_id);
+							$now = dol_now();
+							if (!$result) {
+								$error++;
+								$this->errors[] = $kreawooSynchro->kreawooRemoteAccess->error;
+								$this->errors = array_merge($this->errors, $kreawooSynchro->kreawooRemoteAccess->errors);
+							} else {
+								// $result is id of shipment created in magento, we update ref_customer with it.
+								if ($result === true) $result = $kreawooCommande->remote_id;
+
+								// Update ref customer. Do not use update here, we want to update only one field with no side effect on others.
+								$sqlupdaterefcustmer = "UPDATE " . MAIN_DB_PREFIX . "expedition SET";
+								$sqlupdaterefcustmer .= " ref_customer='" . $result . "'";
+								$sqlupdaterefcustmer .= " WHERE rowid = " . $object->id;
+								$this->db->query($sqlupdaterefcustmer);
+
+								$object->ref_customer = $result;
+							}
+
+							if (!$error && $result !== true) {
+								//kreawoo update link
+								$kreawooCommande->last_update = dol_print_date($now, '%Y-%m-%d %H:%M:%S');
+								if ($kreawooCommande->update($user) < 0) {
+									$error++;
+									$error_msg = $langs->trans('kreawooUpdateRemoteOrderLink', $object->id, $site->name, $kreawooCommande->error);
+									$this->errors[] = $error_msg;
+									$this->errors = array_merge($this->errors, $kreawooCommande->errors);
+									dol_syslog(__METHOD__ . ': Error:' . $error_msg, LOG_WARNING);
+								}
+							}
+						}
+					} else {
+						dol_syslog("This order id = " . $orderId . " is not linked to this kreawoo site id = " . $site->id . ", so we do nothing");
+					}
+				} catch (Exception $e) {
+					$this->errors[] = 'Trigger exception : ' . $e->getMessage();
+					dol_syslog("Trigger '" . $this->name . "' for action '$action' launched by " . __FILE__ . ". id=" . $object->id . " " . 'Trigger exception : ' . $e->getMessage());
+					break;
+				}
+			}
+
+			kreawooUtils::stopAndLogStopwatch($stopwatch_id);
+			if (isset($site)) $site->setEntityValues($save_entity);
+
+			if ($error) {
+				$this->db->rollback();
+				return -1;
+			} else {
+				$this->db->commit();
+				return 1;
+			}
+		}
+
+		return 0;
+	}
+}

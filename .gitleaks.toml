@@ -1,0 +1,10 @@
+title = "KreaWoo secret scanning"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "woocommerce-consumer-credential"
+description = "WooCommerce consumer key or secret"
+regex = '''(?i)\b(?:ck|cs)_[a-f0-9]{40}\b'''
+keywords = ["ck_", "cs_"]

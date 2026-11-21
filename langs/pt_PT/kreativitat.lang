@@ -1,0 +1,9 @@
+# Dolibarr language file - pt_PT - kreawoo
+CHARSET=UTF-8
+kreativitatFamily=Criatividade funciona
+kreativitatFamilySecondary=Criatividade funciona
+KreativitatAboutDesc=Este módulo foi desenvolvido por <a href="http://kreativitat.com" target="_blank">Kreativität Works</a><br><br>Para qualquer dúvida técnica ou feedback, entre em contato conosco em <a href="mailto:support@kreativitat.com">support@kreativitat.com</a><br><br>Para solicitações comerciais, entre em contato conosco em <a href="mailto:info@kreativitat.com">info@kreativitat.com</a><br><br>Encontre nossos outros módulos em <a href="https://www.dolistore.com/index.php?search_query=kreativitat" target="_blank">Dolistore</a>
+KreativitatChangeLog=Registo de alteracoes
+KreativitatAboutDesc1=Este módulo foi desenvolvido por <a href="http://kreativitat.com" target="_blank">Kreativität Works</a><br><br>Para qualquer dúvida técnica ou feedback, abra uma solicitação de suporte em
+KreativitatAboutDesc2=nosso portal de suporte
+KreativitatAboutDesc3=ou entre em contato conosco em <a href="mailto:support@kreativitat.com">support@kreativitat.com</a><br><br>Para solicitações comerciais, entre em contato conosco em <a href="mailto:info@kreativitat.com">info@kreativitat.com</a><br><br>Encontre nossos outros módulos em <a href="https://www.dolistore.com/index.php?search_query=kreativitat" target="_blank">Dolistore</a>

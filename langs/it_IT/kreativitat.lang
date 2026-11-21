@@ -1,0 +1,9 @@
+# Dolibarr language file - it_IT - kreativitat
+CHARSET=UTF-8
+kreativitatFamily=Kreativität Works
+kreativitatFamilySecondary=Kreativität Works
+KreativitatAboutDesc=Ce module a été développé par <a href="http://kreativitat.com" target="_blank">Kreativität Works</a><br><br>Pour toute question technique ou retour, contactez-nous sur <a href="mailto:support@kreativitat.com">support@kreativitat.com</a><br><br>Pour toute question commerciale, contactez-nous sur <a href="mailto:info@kreativitat.com">info@kreativitat.com</a><br><br>Retrouvez nos autres modules sur <a href="https://www.dolistore.com/index.php?search_query=kreativitat" target="_blank">Dolistore</a>
+KreativitatChangeLog=Registro modifiche
+KreativitatAboutDesc1=Ce module a été développé par <a href="http://kreativitat.com" target="_blank">Kreativität Works</a><br><br>Pour toute question technique ou retour, déposez une demande de support sur
+KreativitatAboutDesc2=notre support
+KreativitatAboutDesc3=ou contactez-nous sur <a href="mailto:support@kreativitat.com">support@kreativitat.com</a><br><br>Pour toute question commerciale, contactez-nous sur <a href="mailto:info@kreativitat.com">info@kreativitat.com</a><br><br>Retrouvez nos autres modules sur <a href="https://www.dolistore.com/index.php?search_query=kreativitat" target="_blank">Dolistore</a>

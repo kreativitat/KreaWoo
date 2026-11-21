@@ -1,0 +1,986 @@
+# Dolibarr language file - en_US - kreawoo
+CHARSET=UTF-8
+
+##PERMISSIONS##
+Permission107101                                                                                    =Lire les statuts de synchronisation des sites e-commerce
+Permission107102                                                                                    =Synchroniser les sites e-commerce
+Permission107103                                                                                    =Configurer les sites e-commerce
+
+##ADMIN##
+Module107100Name                                                                                    =KreaWoo
+Module107100Desc                                                                                    =Synchronization module between Dolibarr and WooCommerce e-commerce platforms
+BackToListOfSites                                                                                   =Back to list of sites
+#not used# NothingToSetup                                                                           =Activate the module to access its configuration
+
+##MENU##
+kreawooMenuMain                                                                                   =KreaWoo
+kreawooMenuSites                                                                                  =Synchronization
+kreawooMenuSetup                                                                                  =Sites setup
+
+##SETUP##
+kreawooNgSelectSite                                                                               =Site selection
+#not used# magento                                                                                  =Magento
+#not used# woocommerce                                                                              =WooCommerce
+kreawooToDolibarr                                                                                 =From E-Commerce to Dolibarr
+DolibarrTokreawoo                                                                                 =From Dolibarr to E-Commerce
+kreawooPriceType                                                                                  =Imported prices type
+kreawooPriceTypeHT                                                                                =Excluding Taxe
+kreawooPriceTypeTTC                                                                               =All taxes included
+kreawooPriceTypeDescription                                                                       =Defines the application of VAT to prices of imported E-Commerce products (excl. or incl. VAT)
+#not used# kreawooMagentoUseSpecialPriceDescription                                                          =Cocher pour importer en priorité les prix spéciaux Magento des produits au lieu des prix publics (le prix public ne sera importé que si le prix spécial n'est pas renseigné)
+#not used# WarningStockProductNotFilled                                                                        =L'entrepôt n'est pas renseigné
+#not used# kreawooMagentoUseSpecialPrice                                                                     =Utiliser le prix spécial Magento
+kreawooDashboard                                                                                  =E-Commerce synchronization management
+kreawooSetup                                                                                      =E-Commerce module configuration
+kreawooAddNewSite                                                                                 =Add à new site
+#not used# kreawooCreateSite                                                                                 =Création d'un nouveau site
+#not used# kreawooSetupSite                                                                                  =Configuration du site
+kreawooSiteName                                                                                   =Site name
+kreawooCatProduct                                                                                 =Products category
+kreawooCatSociete                                                                                 =Customers category
+#not used# kreawooFilterLabel                                                                                =Libellé du filtre
+#not used# kreawooFilterValue                                                                                =Valeur du filtre
+#not used# kreawooSiteType                                                                                   =Type de site
+kreawooSiteAddress                                                                                =Site address
+kreawooApiVersion                                                                                 =API version
+kreawooApiVersionDescription                                                                      =Select API version
+kreawooAuthenticationType                                                                         =Authentication type
+kreawooAuthenticationTypeDescription                                                              =Choose your WooCommerce connection type<br>- Oauth 1 (Header) (Connection information is passed in the request header)<br/>- Oauth 1 (Url) (Connection information is passed in plain text in the request url)<br/>- Basic (Connection information is passed in the request header)<br/>- Url (Connection information is passed in clear text in the request url)
+kreawooAuthenticationTypeOauth1Header                                                             =Oauth 1 (Header)
+kreawooAuthenticationTypeOauth1Query                                                              =Oauth 1 (Url)
+kreawooAuthenticationTypeBasic                                                                    =Basic
+kreawooAuthenticationTypeQuery                                                                    =Url
+kreawooUserName                                                                                   =WooCommerce API client key
+kreawooUserPassword                                                                               =Secret key WooCommerce API
+#not used# kreawooUserPasswordRetype                                                                         =Clé secret API WooCommerce - confirmation
+kreawooTimeout                                                                                    =WooCommerce API access timeout
+kreawooTimeoutDescription                                                                         =WooCommerce API access timeout, in seconds (30 seconds if empty)
+kreawooDebug                                                                                      =Debug Mode
+kreawooDebugDescription                                                                           =Enable detailed debugging when connecting to the WooCommerce API
+kreawooConfirmDelete                                                                              =Are you sure you want to delete this site?
+kreawooDeleteProcessingWebHookShort                                                               =Unlock WebHooks sync
+kreawooDeleteProcessingWebHookTitle                                                               =Unlock WebHooks synchronization
+kreawooConfirmDeleteProcessingWebHook                                                             =The webhook processing cron job does not seem to have finished correctly. Are you sure you want to delete the synchronization lock?
+kreawooProcessingWebHooksSynchronisationDeleted                                                   =The WebHooks synchronization lock has been deleted
+#not used# kreawooConfirmReset                                                                               =Êtes vous sûre de vouloir purger les données synchronisées liées à ce site ? (<strong>Attention<strong> : cette action est irréversible, toute les données synchronisées seront perdues)
+#not used# kreawooSetupSaved                                                                                 =La configuration a bien été enregistrée.
+#not used# kreawooSetupErrorDb                                                                               =Une erreur est survenue lors de l'enregistrement dans la base de données.
+#not used# kreawooDeleteOk                                                                                   =Le site a bien été supprimé.
+#not used# kreawooSetupPasswordNotSame                                                                       =Le mot de passe doit être identique dans les deux champs.
+#not used# kreawooSetupNameEmpty                                                                             =Le nom du site est obligatoire.
+kreawooSiteNameDescription                                                                        =Enter the name that will be displayed in the list of e-commerce sites in Dolibarr (example: My Site).
+kreawooCatProductDescription                                                                      =Select the Dolibarr mother product category that hosts the product categories to be synchronized with the e-commerce platform (e.g. Eboutique products). To be created once the Dolibarr Categories module has been activated.
+kreawooCatSocieteDescription                                                                      =Select the Dolibarr Third-party customer category to mark e-commerce customers (example: Eboutique customers). To be created once the Dolibarr Categories module has been activated.
+#not used# kreawooFilterLabelDescription                                                                     =Indiquez un filtre (exemple : store_id)
+#not used# kreawooFilterValueDescription                                                                     =Indiquez la valeur du filtre (exemple : *)
+#not used# kreawooSiteTypeDescription                                                                        =Sélectionnez un type de site
+kreawooSiteAddressDescription                                                                     =WooCommerce site URL. (Note: localhost access may not work)
+kreawooUserNameDescription                                                                        =Account to be created in WooCommerce via the <strong>Settings > advanced</strong> menu.
+kreawooUserPasswordDescription                                                                    =Account to be created in WooCommerce via the <strong>Settings > advanced</strong> menu.
+kreawooSite                                                                                       =Site
+kreawooLastUpdate                                                                                 =Last update
+kreawooNoUpdateSite                                                                               =This site has never been fully synchronized (no items left to synchronize)
+kreawooUpdateSite                                                                                 =Detailed site synchronization
+kreawooUpdateAll                                                                                  =Synchronize everything for this site
+kreawooStockProduct                                                                               =Warehouse
+kreawooStockProductDescription                                                                    =Si vous définissez l'option précédente de <b>Synchronisation des Stocks</b> à <b>Dolibarr vers E-Commerce</b>, la synchronisation du stocks prendra les quantités de cet entrepôt. <br>Une tâche planifiée <b>Mise à jour des stocks réalisées<b> est disponible pour automatiquement envoyer sur le site E-Commerce les nouvelles quantités sur les produits synchronisés.<br>Si vous définissez l'option précédente de <b>Synchronisation des Stocks</b> à <b>E-Commerce vers Dolibarr</b>, les produits créés ou modifiés depuis la plateforme E-Commerce seront synchronisés dans Dolibarr dans cet entrepôt. <br><b>Attention</b> : Les stocks de Dolibarr sont modifiés lors de la synchronisation des produits et non pas pendant la synchronisation des commandes ou des factures.
+kreawooReset                                                                                      =Delete from Dolibarr all data from E-Commerce store synchronization
+kreawooResetLink                                                                                  =Delete link records between Dolibarr and the E-Commerce store
+#not used# kreawooSetupCatProductEmpty                                                                       =A product category is mandatory
+#not used# kreawooSetupCatSocieteEmpty                                                                       =A customer category is mandatory
+#not used# kreawooSetupTypeEmpty                                                                             =A site type is mandatory
+#not used# kreawooSetupAddressEmpty                                                                          =The site URL is mandatory
+kreawooConnectErrorCheckUsernamePasswordAndAdress                                                 =Connection error, please check connection settings.
+kreawooSociete                                                                                    =Third-party customers
+kreawooSiteSynchro                                                                                =Site synchronization
+#not used# kreawooProducts                                                                                   =Products
+kreawooCommande                                                                                   =Orders
+kreawooFacture                                                                                    =Invoices
+kreawooObjectToUpdate                                                                             =Items to be synchronized
+kreawooCountToUpdate                                                                              =Number of items to synchronize (modified on E-Commerce side, not updated in Dolibarr)
+kreawooSiteErrorConnect                                                                           =A connection problem has occurred. Please try again.
+#not used# kreawooSynchronizeSociete                                                                         =Synchroniser les tiers clients et contacts de tiers
+kreawooSynchronizeProduct                                                                         =Synchronize third-party customers and contacts
+kreawooSynchronizeCommande                                                                        =Synchronize orders
+kreawooSynchronizeFacture                                                                         =Synchronize invoices
+kreawooSynchronizeNewSociete                                                                      =Synchronize new third-party customers and contacts
+kreawooSynchronizeNewProduct                                                                      =Synchronize new products
+kreawooSynchronizeNewCommande                                                                     =Synchronize new orders
+#not used# kreawooSynchSocieteErrorCreateUpdateSociete                                                       =Erreur dans le synchronisation du client
+kreawooErrorGetSocieteToUpdate                                                                    =A connection problem occurred while retrieving clients. Please try again.
+#not used# kreawooErrorGetProduitsToUpdate                                                                   =A connection problem occurred while retrieving the products. Please try again.
+kreawooErrorGetCategoryToUpdate                                                                   =A connection problem occurred when retrieving categories. Please try again.
+kreawooErrorGetCommandeToUpdate                                                                   =A connection problem occurred while retrieving orders. Please try again.
+kreawooErrorGetFactureToUpdate                                                                    =A connection problem occurred while retrieving invoices. Please try again.
+kreawooReboot                                                                                     =Please deactivate the module and reactivate it before trying again.
+kreawooAnonymousCreateFailed                                                                      =Creation of synchronization object corresponding to anonymous third party fails.
+kreawooNoDbAnonymous                                                                              =The anonymous third party does not exist in the database.
+kreawooResetDolFactureSuccess                                                                     =imported invoices have been deleted.
+kreawooResetSynchFactureSuccess                                                                   =invoice synchronization references have been deleted.
+kreawooResetDolCommandeSuccess                                                                    =imported orders have been deleted.
+kreawooResetSynchCommandeSuccess                                                                  =références de synchronisation de commandes ont bien été supprimées.
+kreawooResetDolProductSuccess                                                                     =produits importés ont bien été supprimés.
+kreawooResetSynchProductSuccess                                                                   =order synchronization references have been removed.
+kreawooResetDolSocpeopleSuccess                                                                   =imported contacts have been deleted.
+kreawooResetSynchSocpeopleSuccess                                                                 =contact synchronization references have been deleted.
+kreawooResetDolSocieteSuccess                                                                     =imported third-party customers have been deleted
+kreawooResetSynchSocieteSuccess                                                                   =third-party customer synchronization references have been deleted.
+kreawooResetDolCategorySuccess                                                                    =imported categories have been deleted (this number may be higher than the one shown if children of deleted categories are included).
+kreawooResetSynchCategorySuccess                                                                  =category synchronization references have been deleted (this number may be higher than the one indicated when including the children of deleted references).
+kreawooSynchkreawooCategoryUpdateError                                                          =Error updating a category.
+kreawooSynchkreawooCategoryCreateError                                                          =Erreur lors de la création d'une catégorie.
+kreawooSynchronizeCategoryProduct                                                                 =Synchronize product categories
+kreawooSynchCategoryError                                                                         =Erreur lors de la synchronisation des catégories.
+kreawooSynchCategorySuccess                                                                       =Error synchronizing categories.
+kreawooSynchCategoryNoImportRoot                                                                  =Category synchronization has been cancelled because the Dolibarr import category is not defined. Please define it in the synchronization configuration before trying again.
+kreawooSynchCategoryConnectError                                                                  =A connection error occurred while synchronizing categories. Please try again.
+#not used# kreawooSynchSocieteSuccess                                                                        =customers have been synchronized.
+kreawooSynchProductSuccess                                                                        =products have been synchronized.
+#not used# kreawooSynchCommandeSuccess                                                                       =orders have been synchronized.
+kreawooSynchFactureSuccess                                                                        =invoices have been synchronized.
+#not used# kreawooSynchSocieteFailed                                                                         =%s errors occurred during synchronization.
+kreawooSynchkreawooSocpeopleCreateError                                                         =An error occurred during contact registration (Third party ID: %s; first name: %s; last name: %s).
+kreawooClickUrlToTestUrl                                                                          =Click here to test the URL (an XML or JSON file should be displayed)
+kreawooCategoriesProducts                                                                         =Product categories
+SyncCategFirst                                                                                      =Synchronize categories first
+kreawooSynchCommandeError                                                                         =Error during command synchronization
+OnlyThirdPartyWithTags                                                                              =No. of third parties linked to the <b>%s</b> category (i.e. supposed to be shared with the online store)
+NbInDolibarr                                                                                        =Nb in Dolibarr
+NbInDolibarrLinkedToE                                                                               =Nb in Dolibarr related to the online store
+ModuleCustomerOrderDisabled                                                                         =Not managed (“Commands” module not activated)
+kreawooLastCompleteSync                                                                           =Date of last synchronization <b>from %s to Dolibarr</b> completed (no more items to synchronize)
+WithMagentoThirdIsModifiedIfAddressModified                                                         =With WooCommerce, a third party will also be considered modified if one of its contacts/addresses has been modified.
+SyncSocieteFirst                                                                                    =Synchronize customers first
+SyncCommandeFirst                                                                                   =Synchronize orders first
+OnlyProductsIn                                                                                      =Only products in the <b>%s</b> category and its subcategories are synchronized from Dolibarr to Magento or WooCommerce.
+RefreshCount                                                                                        =Refresh count
+SyncIsAutomaticInRealTime                                                                           =Synchronization <b>from Dolibarr to %s</b> is performed in real time.
+OnlyProductCategIn                                                                                  =Only the <b>%s</b> category and its subcategories are synchronized from Dolibarr to Magento or WooCommerce.
+OnlyThirdPartyIn                                                                                    =Only thirds of the <b>%s</b> category and its subcategories are synchronized from Dolibarr to Magento or WooCommerce.
+WarningSoapCacheIsOn                                                                                =Warning: WSDL cache active on <strong>%s</strong> directory.
+#not used# WarningSoapCacheIsOn2                                                                               =Changing <strong>%s</strong> or its contents may not be seen by PHP.
+SoapCacheIsOff                                                                                      =Your PHP WSDL cache is inactive.
+SetupOfWarehouseNotDefinedForThisSite                                                               =A new or modified product has been found on the E-Commerce store with a stock level different from that in Dolibarr. In order to create/update them in Dolibarr, you need to set up the warehouse to be initialized.
+kreawooStockSyncDirection                                                                         =Stock synchronization
+kreawooStockSyncDirectionDescription                                                              =This parameter determines:<br/>- Whether the stock should be decremented in Dolibarr following a decrement of the E-Commerce stock (rare) or <br/>- Whether the E-Commerce stock should be replaced by the Dolibarr stock following its modification (common choice).
+kreawooValidOrderWarehouse                                                                        =Order validation
+kreawooValidOrderWarehouseDescription                                                             =Warehouse used by default for order validation during synchronization from E-Commerce to Dolibarr
+kreawooValidInvoiceWarehouse                                                                      =Invoice validation
+kreawooValidInvoiceWarehouseDescription                                                           =Warehouse used by default when validating an invoice during synchronization from E-Commerce to Dolibarr
+#not used# MainSyncSetup                                                                                       =General synchronization
+#not used# StockSyncSetup                                                                                      =Stock synchronization
+#not used# ErrorModuleSoapRequired                                                                             =Error: the PHP REST module is required for the module to function correctly.
+SyncAll                                                                                             =General synchronization
+DangerZone                                                                                          =Hazardous area
+ShowDebugTools                                                                                      =Display init/purge/debug tools
+kreawooShipping                                                                                   =Shipping costs
+kreawooPriceLevel                                                                                 =Price level
+kreawooPriceLevelDescription                                                                      =Only this price level will be synchronized between Dolibarr and E-Commerce
+kreawooUpdateLevelPrice                                                                           =Price level update
+kreawooConfirmUpdatePriceLevel                                                                    =Price level updateYou have modified the price level. The products on the E-Commerce site will be updated. This operation may take some time, please confirm.
+ThirdPartyForNonLoggedUsers                                                                         =Generic third party for collecting customers with no account created
+SynchUnkownCustomersOnThirdParty                                                                    =Generic third party to which orders from customers without an account will be attached
+kreawooDontSearchCompanyByNameAndZip                                                              =Search by name and zip code
+kreawooDontSearchCompanyByNameAndZipDescription                                                   =Do not search for the Dolibarr third party using the name and postal code provided by WooCommerce
+kreawooDontUpdateDolibarrCompany                                                                  =Third-party update
+kreawooDontUpdateDolibarrCompanyDescription                                                       =Do not update the Dolibarr third party when it already exists in Dolibarr
+
+AreYouSureYouWantToDeleteAll                                                                        =Etes-vous sûr de vouloir supprimer les liens de mapping entre Dolibarr et les objets kreawoo mais aussi les objets trouvés dans Dolibarr ?
+AreYouSureYouWantToDeleteLinks                                                                      =Etes-vous sûr de vouloir supprimer les liens entre Dolibarr et les objets kreawoo ?
+ClearLinks=Delete links
+ClearData=Delete links and Dolibarr linked records
+Direction =
+Development =
+kreawooErrorElementNotSupportedForLinesMovementStockOnDifferentWarehouse =
+kreawooErrorFetchObjectLinked =
+kreawooErrorGetCategoryIdsAlreadyLinked =
+kreawooErrorGetCommandeLastUpdateDate =
+kreawooErrorGetFactureLastUpdateDate =
+kreawooErrorGetNbCategoriesToUpdate =
+kreawooErrorGetNbSocieteToUpdate =
+kreawooErrorGetProductLastUpdateDate =
+kreawooErrorGetProductToUpdate =
+kreawooErrorGetSocieteLastUpdateDate =
+kreawooErrorInvoiceSetBankAccount =
+kreawooErrorInvoiceValidateWarehouseNotConfigured =
+kreawooErrorrCeateRemoteLivraison =
+kreawooErrorSearchContact =
+kreawooErrorSetCorrectAmount =
+kreawooErrorSetCorrectAmountLine =
+kreawooErrorSetRemoteProductLineIdIntoImportKey =
+kreawooErrorSkuNeededCheckModuleConfiguration =
+kreawooErrorsynchCategory =
+kreawooErrorsynchFacture =
+kreawooErrorsynchSocpeople =
+kreawooErrorThirdPartyCategoryNotConfigured =
+kreawooErrorUpdateProductMultiLanguages =
+kreawooErrorWhenSynchronizeContact =
+kreawooNoSite =
+kreawooProcessingWebHooksSynchronisationSince =
+kreawooSiteError =
+kreawooSynchContactCreateError =
+kreawooSynchContactFetchError =
+kreawooSynchContactUpdateError =
+kreawooSynchkreawooFactureCreateError =
+kreawooSynchkreawooFactureUpdateError =
+kreawooSynchkreawooSocpeopleUpdateError =
+kreawooSynchFactureErrorCommandeNotExists =
+kreawooSynchFactureErrorFactureSynchExistsButNotFacture =
+kreawooSynchFactureErrorSocieteNotExists =
+kreawooSynchronizeStockToSite =
+kreawooSynchSocieteErrorBetweenkreawooSocpeopleAndContact =
+kreawooSynchSocpeopleErrorCreateUpdateSocpeople =
+kreawooUpdateProduct =
+kreawooWoocommerceCreateRemoteCategoryParentNotFound =
+kreawooWoocommerceErrorGetRemoteRefund =
+kreawooWoocommerceErrorMissingParentRemoteDate =
+kreawooWoocommerceGetProduct =
+kreawooWoocommerceGetProductVariation =
+Experimental =
+ModuleDisabled =
+SeekreawooConfFileIfKo =
+
+
+## Wordpress Setup ##
+kreawooWordpressAuthenticationOptions                                                             =WordPress connection settings
+kreawooWordpressAuthenticationSetup                                                               =(Go to <a class=“notasortlink” href=“%s” target=“_blank”>this page</a> , then configure the connection)
+kreawooWordpressAuthenticationType                                                                =Authentication type
+kreawooWordpressAuthenticationTypeDescription                                                     =Choose between internal Wordpress login with an application password located on a user<br>Or JWT authentication with the “WordPress REST API Authentication” extension from miniOrange
+kreawooWordpressAuthenticationTypeWordpressApplication                                            =Application password (Wordpress)
+kreawooWordpressAuthenticationTypeJWTAuthentication                                               =JWT authentication
+kreawooWordpressAuthenticationLogin                                                               =Identifier
+kreawooWordpressAuthenticationLoginDescription                                                    =Identifiant de connexion
+kreawooWordpressAuthenticationPassword                                                            =Login ID
+kreawooWordpressAuthenticationPasswordDescription                                                 =Login password
+kreawooApiIncludePostParametersInSignature                                                        =Authentication Signature
+kreawooApiIncludePostParametersInSignatureDescription                                             =Include POST data in authentication signature
+kreawooWordpressTimeout                                                                           =Wordpress API access timeout
+kreawooWordpressTimeoutDescription                                                                =Wordpress API access timeout, in seconds (30 seconds if empty)
+kreawooWordpressDebug                                                                             =Debug
+kreawooWordpressDebugDescription                                                                  =Enable detailed debugging when connecting to the Wordpress API
+
+kreawooOrderStatusSetup                                                                           =Order status synchronization
+kreawooOrderStatusSetupDescription                                                                =Select the corresponding status when synchronizing.
+kreawooOrderStatusDtoECheckLvlStatus                                                              =Changes status only if level is higher than previous status
+kreawooOrderStatusDtoECheckLvlStatusDescription                                                   =The status level is indicated in the values of the complementary order status attribute (Index in the form: status_level,label). ex: 0_on-hold,Waiting
+
+kreawooSynchronizeProductImages                                                                   =Synchronize images
+kreawooProductImagesSynchronized                                                                  =The images were synchronized.
+
+#not used# kreawooRemoteAccessConnect                                                                        =Connection error to site '%s': %s
+#not used# kreawooRemoteAccessConvertRemoteObjectIntoDolibarrCommande                                        =Order retrieval error on site '%s': %s
+#not used# kreawooRemoteAccessConvertRemoteObjectIntoDolibarrProduct                                         =Error uploading image for remote product 'id:%s' to Wordpress media on site '%s': %s
+#not used# kreawooRemoteAccessConvertRemoteObjectIntoDolibarrProductVariations                               =Error retrieving remote product 'id:%s' from site '%s': %s
+#not used# kreawooRemoteAccessConvertRemoteObjectIntoDolibarrSociete                                         =Error updating remote product 'id:%s' on site '%s': %s
+#not used# kreawooRemoteAccessConvertRemoteObjectIntoDolibarrSocpeople                                       =Error updating remote command 'id:%s' on site '%s': %s
+#not used# kreawooRemoteAccessCreateRemoteProduct                                                            =Error sending file for remote command 'id:%s' to Wordpress media on site '%s': %s
+#not used# kreawooRemoteAccessCreateRemoteProductLink                                                        =Error linking file with remote command 'id:%s' on site '%s': %s
+#not used# kreawooRemoteAccessGetCategoryData                                                                =Error retrieving customer list to be updated on '%s' site: %s
+#not used# kreawooRemoteAccessGetCommandeToUpdate                                                            =Error retrieving list of categories to be updated on site '%s': %s
+#not used# kreawooRemoteAccessGetProductToUpdate                                                             =Error retrieving list of products to be updated on site '%s': %s
+#not used# kreawooRemoteAccessGetRemoteCategoryTree                                                          =Error retrieving list of commands to be updated for site '%s': %s
+#not used# kreawooRemoteAccessGetSocieteToUpdate                                                             =Error retrieving data from remote category 'id:%s' on site '%s': %s
+#not used# kreawooRemoteAccessSendFileForCommande                                                            =Link creation error for product 'id:%s' on site '%s': %s
+#not used# kreawooRemoteAccessSendFileForCommandeInWordpress                                                 =Error creating product 'id:%s' on site '%s': %s
+#not used# kreawooRemoteAccessUpdateRemoteCommande                                                           =Customer retrieval error (for contacts/addresses) on site '%s': %s
+#not used# kreawooRemoteAccessUpdateRemoteProduct                                                            =Customer recovery error on site '%s': %s
+#not used# kreawooRemoteAccessUpdateRemoteProductGetRemoteProduct                                            =Remote product variation recovery error 'id:%s' on site '%s': %s
+#not used# kreawooRemoteAccessUpdateRemoteProductSendImage                                                   =Error retrieving products from site '%s': %s
+#not used# kreawooRemoteAccessUpdateRemoteProductVariation                                                   =Error updating variation 'id:%s' of remote product 'id:%s' on site '%s': %s
+#not used# kreawooRemoteAccessUpdateRemoteSociete                                                            =Error updating remote company 'id:%s' on site '%s': %s
+#not used# kreawooRemoteAccessUpdateRemoteSocpeople                                                          =Error updating remote company contacts/addresses 'id:%s' on site '%s': %s
+#not used# kreawooRemoteAccessUpdateRemoteStockProduct                                                       =Stock update error for variation 'id:%s' of remote product 'id:%s' on site '%s': %s
+#not used# kreawooRemoteAccessUpdateRemoteStockProductVariation                                              =Stock update error for remote product 'id:%s' on site '%s': %s
+
+#not used# kreawooSynchkreawooProductDownloadImageError                                                    =Image recovery error (%s) for product 'id:%s' from remote product 'id:%s' on site '%s'.
+
+#not used# kreawooNoDescForProductLine                                                                       =The API was unable to retrieve the product description
+
+kreawooUpdateRemoteCompanyLink                                                                    =Error updating company link 'id:%s' on site '%s': %s
+kreawooUpdateRemoteSocpeopleLink                                                                  =Error updating contact link 'id:%s' on site '%s': %s
+kreawooUpdateRemoteProductLink                                                                    =Error updating product link 'id:%s' on site '%s': %s
+kreawooCreateRemoteProductLink                                                                    =Error creating product link 'id:%s' on site '%s': %s
+kreawooUpdateRemoteOrderLink                                                                      =Error updating the 'id:%s' command link on the '%s' site: %s
+kreawooUpdateRemoteInvoiceLink                                                                    =Error updating invoice link 'id:%s' on site '%s': %s
+
+kreawooRealTimeSynchroDolibarrTokreawooThirdParty                                               =Real-time third-party synchronization from Dolibarr to E-Commerce
+kreawooRealTimeSynchroDolibarrTokreawooThirdPartyDescription                                    =Synchronization of the third party in the E-Commerce site when modifying the one linked in Dolibarr
+kreawooRealTimeSynchroDolibarrTokreawooContact                                                  =Real-time contact synchronization from Dolibarr to E-Commerce
+kreawooRealTimeSynchroDolibarrTokreawooContactDescription                                       =Synchronization of the contact in the E-Commerce site when modifying the one linked in Dolibarr
+kreawooRealTimeSynchroDolibarrTokreawooProduct                                                  =Real-time product synchronization from Dolibarr to E-Commerce
+kreawooRealTimeSynchroDolibarrTokreawooProductDescription                                       =Synchronization of the product in the E-Commerce site when modifying the one linked in Dolibarr
+kreawooRealTimeSynchroDolibarrTokreawooOrder                                                    =Real-time order synchronization from Dolibarr to E-Commerce
+kreawooRealTimeSynchroDolibarrTokreawooOrderDescription                                         =Synchronization of the order in the E-Commerce site when the linked site is modified in Dolibarr
+
+#not used# kreawooPaymentCondition                                                                           =Terms of payment
+#not used# kreawooPaymentConditionDescription                                                                =Default payment terms when retrieving the order from the E-Commerce site
+
+kreawooCountToUpdateDtoE                                                                          =Number of items to synchronize (Product with site category and unrelated or newer)
+SyncProductFirst                                                                                    =Synchronize products first
+
+kreawooCreateRemoteCategoryLink                                                                   =Error creating the 'id:%s' category link on the '%s' site: %s
+
+kreawooSynchkreawooMotherCategoryCreateError                                                    =Error creating root category link for remote category '%s' 'id:%s' on site '%s'.
+kreawooNGUpdateElementDateMoreRecent                                                              =Also includes items whose update date is more recent than the synchronization date.
+ProductsSyncSetup                                                                                   =Product synchronization
+AllDirection                                                                                        =In both directions
+kreawooProductImageSyncDirection                                                                  =Synchronisation des images
+kreawooProductImageSyncDirectionDescription                                                       =This parameter determines the direction in which images are updated.
+kreawooProductRefSyncDirection                                                                    =Reference synchronization
+kreawooProductRefSyncDirectionDescription                                                         =This parameter determines the direction in which the reference is updated.
+kreawooProductDescriptionSyncDirection                                                            =Description synchronization
+kreawooProductDescriptionSyncDirectionDescription                                                 =This parameter determines the direction in which the description is updated.
+kreawooProductShortDescriptionSyncDirection                                                       =Short description synchronization
+kreawooProductShortDescriptionSyncDirectionDescription                                            =This parameter determines the direction in which the short description is updated.
+kreawooProductWeightSyncDirection                                                                 =Product weight synchronization
+kreawooProductWeightSyncDirectionDescription                                                      =This parameter determines the product weight update direction.
+kreawooProductDimensionSyncDirection                                                              =Product dimensions synchronization
+kreawooProductDimensionSyncDirectionDescription                                                   =This parameter determines the direction in which product dimensions are updated.
+kreawooProductTaxSyncDirection                                                                    =E-Commerce VAT class synchronization
+kreawooProductTaxSyncDirectionDescription                                                         =This parameter determines the direction in which the VAT class is updated on the E-Commerce site.
+kreawooProductStatusSyncDirection                                                                 =Status synchronization on E-Commerce site
+kreawooProductStatusSyncDirectionDescription                                                      =This parameter determines the direction in which the status is updated on the E-Commerce site.
+
+kreawooProductWeightUnits                                                                         =E-Commerce weight unit
+kreawooProductWeightUnitsDescription                                                              =This parameter determines the weight unit on the E-Commerce site.
+kreawooProductDimensionUnits                                                                      =Dimension units on the E-Commerce site
+kreawooProductDimensionUnitsDescription                                                           =This parameter determines the unit of dimensions on the E-Commerce site.
+
+kreawooExportProductsPrices                                                                       =Export product prices (KreaWoo)
+kreawooImportProductsPrices                                                                       =Import product prices (KreaWoo) (does not support the addition of new products, updating is only supported by a .csv file)
+
+kreawooUnlinkProductFromSite                                                                      =Unlink from site
+kreawooConfirmUnlinkProductFromSite                                                               =Are you sure you want to remove this product from the e-commerce site?
+kreawooResetCategoriesProductSuccess                                                              =Product categories have been removed.
+
+EcommerceUpdateCompanyFromkreawoo                                                                 =Update from the E-Commerce site
+EcommerceConfirmUpdateCompanyFromkreawoo                                                          =Are you sure you want to update this third party from this E-Commerce site?
+EcommerceUpdateCompanyFromkreawooSuccess                                                          =This third party has been updated.
+EcommerceSiteNotFound                                                                               =Site with ID %s could not be loaded
+
+#not used# kreawooSynchProductError                                                                          =Error synchronizing remote product:
+
+kreawooOnlyNew                                                                                    =Only new
+
+kreawooUpdateRemoteCompanyLinkWhenMergeCompany                                                    =Error updating links of company 'id:%s' when merging with company 'id:%s': %s
+#not used# kreawooSynchronizeStockTokreawoo                                                                =Synchronization of product stock on %s site.
+
+kreawooCreateOrder                                                                                =Create command
+kreawooCreateOrderDescription                                                                     =Activate order creation at order synchronization
+kreawooCreateInvoice                                                                              =Create invoice
+kreawooCreateInvoiceDescription                                                                   =Activate invoice creation when order is synchronized
+kreawooCreateInvoiceType                                                                          =Invoice type
+kreawooCreateInvoiceTypeDescription                                                               =Type of invoice created when order is synchronized
+kreawooCreateInvoiceDepositType                                                                   =
+kreawooCreateInvoiceDepositTypeDescription                                                        =
+kreawooCreateInvoiceDepositValue                                                                  =Amount or percentage
+kreawooCreateInvoiceDepositValueDescription                                                       =
+kreawooCreateSupplierInvoiceFromFee                                                               =Create supplier invoices from charges
+kreawooCreateSupplierInvoiceFromFeeDescription                                                    =Create supplier invoice from charges at time of invoice creation
+kreawooFeeLineAsItemLine                                                                          =Treat expense lines as service lines
+kreawooFeeLineAsItemLineDescription                                                               =Treat expense lines as service lines when creating the order/invoice
+kreawooSendInvoiceByMail                                                                          =Send invoice by e-mail
+kreawooSendInvoiceByMailDescription                                                               =Send invoice by e-mail after successful invoice creation
+kreawooCreateOrderDescription                                                                     =Associated actions when retrieving WooCommerce orders (enter payment methods associated with WooCommerce)
+kreawooCreateInvoiceIfAmount0                                                                     =Create invoice even if amount is zero
+kreawooCreateInvoiceIfAmount0Description                                                          =Create invoice even if amount is zero when order is synchronized
+
+kreawooRemoteWarehousesCorrespondence                                                             =Correspondence between warehouse and site ( ignored if warehouse is not configured )
+kreawooWarehouseSetToZeroEvenIfEmptyStock                                                         =Defines stock even if quantity is zero
+kreawooWarehouseOldEntry                                                                          =Old warehouse
+kreawooUpdateRemoteWarehouses                                                                     =Remote warehouse updates
+kreawooConfirmUpdateRemoteWarehouses                                                              =Confirm the update of remote warehouses for this site ?
+kreawooRemoteWarehousesUpdated                                                                    =Remote warehouses from the site have been updated.
+kreawooRemoteID                                                                                   =Remote ID
+
+kreawooMovementStockOnValidateOrderOrInvoice                                                      =Warehouse settings for %s validation
+kreawooSearchWarehouseOrder                                                                       =Warehouse search order to be used during validation for the product line:
+kreawooSearchWarehouseByMultiWarehouseCorrespondence                                              =<br> - According multi-store configuration
+kreawooSearchWarehouseByShippingMethodCorrespondence                                              =<br> - According the configuration of transport modes
+kreawooSearchWarehouseByDefaultWarehouse                                                          =<br> - According default configuration
+
+kreawooRemoteShippingZoneMethodsCorrespondence                                                    =Correspondence between warehouses and transport modes
+kreawooUpdateRemoteShippingZoneMethods                                                            =Update remote transport modes
+kreawooUpdateRemoteShippingMethods                                                                =Update remote transport modes
+kreawooConfirmUpdateRemoteShippingMethods                                                         =Confirm the update of remote transport modes for this site?
+kreawooEnableWarehouseDependingOnShippingZoneMethodSupport                                        =Warehouse selection by mode of transport
+kreawooEnableWarehouseDependingOnShippingZoneMethodSupportDescription                             =Define the warehouse used during validation according to the mode of transport<br>(if the order has several modes of transport, only the first to be met will be taken into account).
+kreawooRemoteShippingZoneMethodsUpdated                                                           =Remote modes of transport from the site have been updated.
+kreawooShippingMethodOldEntry                                                                     =Old mode of transport
+
+kreawooPaymentGatewaysCorrespondence                                                              =Matching payment methods with the site
+kreawooPaymentGatewayLabel                                                                        =Payment methods on the site
+kreawooUpdatePaymentGateways                                                                      =Payment methods update
+kreawooConfirmUpdatePaymentGateways                                                               =Confirm updated payment methods for this site?
+kreawooPaymentGatewaysUpdated                                                                     =Payment methods from the updated website.
+kreawooCreateAssociatePaymentForInvoice                                                           =Create the associated payment for the invoice
+kreawooSelectMailModelForSendInvoice                                                              =Choice of e-mail template for invoice dispatch
+kreawooProductForFee                                                                              =Product for supplier invoice charges
+kreawooCreateAssociatePaymentForSupplierInvoice                                                   =Create the associated payment for the supplier invoice
+kreawooOrderNoteIntoPublicNote                                                                    =Order note
+kreawooOrderNoteIntoPublicNoteDescription                                                         =Insert it in the public note instead of the private note (default)
+
+kreawooCreateOrderSalesRepresentativeFollowByDefault                                              =Customer care manager
+kreawooCreateOrderSalesRepresentativeFollowByDefaultDescription                                   =User type “Order/invoice/customer follow-up manager” assigned by default when an order is synchronized from the E-Commerce site.
+
+RestrictSyncForRecordBetween                                                                        =Limit data synchronization (based on registration date for customers, publication date for products and creation date for orders) from the
+RestrictSyncToCompanyRemoteID                                                                       =Restrict customer synchronization to the following remote IDs (customer_id, customer_id, ...)
+RestrictSyncToProductRemoteID                                                                       =Restrict product synchronization to the following remote IDs (product_id, product_id|variation_id, ...)
+RestrictSyncToOrderRemoteID                                                                         =Restrict order synchronization to the following remote IDs (order_id, order_id, ...)
+DontSyncProductWhenSyncOrders                                                                       =Do not synchronize products when synchronizing orders
+RestrictNbInSync                                                                                    =Limit the number of records of the same object to be synchronized in a single query
+
+kreawooSiteWebHooksSetup                                                                          =Configuring Web hooks
+kreawooSiteWebHooksUrl                                                                            =Delivery URL
+kreawooSiteWebHooksUrlDescription                                                                 =URL to which the Web hook connection is delivered
+kreawooSiteWebHooksSecret                                                                         =Secret
+kreawooSiteWebHooksSecretDescription                                                              =he secret key is used to generate a hash of the Web hook delivered and indicated in the request headers.
+kreawooSiteWebHooksVolumetryAlert                                                                 =Volume alert
+kreawooSiteWebHooksVolumetryAlertDescription                                                      =Sends an email via a scheduled task if the number of hooks waiting to be processed exceeds this value (0 means no check)
+kreawooShippingService                                                                            =Shipping costs
+kreawooShippingServiceDescription                                                                 =Service used to manage shipping costs
+kreawooDiscountCodeService                                                                        =Promo code
+kreawooDiscountCodeServiceDescription                                                             =Service used to manage coupon codes
+kreawooPwGiftCardsService                                                                         =Gift cards
+kreawooPwGiftCardsServiceDescription                                                              =Service used to manage Gift Cards (WooCommerce extension: <a href=“https://wordpress.org/plugins/pw-woocommerce-gift-cards/” target=“_blank”>PW WooCommerce Gift Cards Pro</a>)
+kreawooAcfwStoreCreditsService                                                                    =Store credits
+kreawooAcfwStoreCreditsServiceDescription                                                         =Service used to manage Shop Credits (WooCommerce extension: <a href=“https://wordpress.org/plugins/advanced-coupons-for-woocommerce-free/” target=“_blank”>Advanced Coupons for WooCommerce Free</a>)
+kreawooFeeService                                                                                 =Ancillary costs
+kreawooFeeServiceDescription                                                                      =Service used to manage ancillary costs
+
+kreawooProcessPendingWebHooks                                                                     =Processing of all orders delivered via Web hooks
+kreawooSynchronizeWebHooksSuccess                                                                 =Synchronization of the web hook queue has been successfully completed
+kreawooAlreadyProcessingWebHooksSynchronization                                                   =Synchronization of the queue of web hooks received is already being processed.
+kreawooSince                                                                                      =Since
+kreawooSynchronizeCustomersSuccess                                                                =%s customers (third parties/contacts) successfully synchronized
+kreawooUpdateThirdPartyFromSiteNote                                                               =Third party updated from KreaWoo on %s (Site: %s; Remote ID: %s)
+kreawooCreateThirdPartyFromSiteNote                                                               =Third party created from KreaWoo (Site: %s)
+kreawooSynchronizeProductsSuccess                                                                 =%s products have successfully synchronized (%s have been updated)
+kreawooUpdateProductFromSiteNote                                                                  =Product updated from KreaWoo on %s (Site: %s; Remote ID: %s)
+kreawooCreateProductFromSiteNote                                                                  =Product created from KreaWoo (Site: %s)
+kreawooStockInitFromKreaWoo                                                                       =Stock initialized by KreaWoo
+kreawooStockUpdateFromKreaWoo                                                                     =Stock update by KreaWoo
+kreawooSynchronizeOrdersSuccess                                                                   =%s commands successfully synchronized
+kreawooUpdateOrderFromSiteNote                                                                    =Command updated from KreaWoo on %s (Site: %s; Remote ID: %s)
+kreawooCreateOrderFromSiteNote                                                                    =Command created from KreaWoo (Site: %s)
+kreawooCreateInvoiceFromSiteNote                                                                  =Invoice created from KreaWoo (Site: %s)
+kreawooCreateSupplierInvoiceFromSiteNote                                                          =Supplier invoice created from KreaWoo (Site: %s)
+kreawooFirstNameLastNameNotInformed                                                               =No name entered
+kreawooLastNameNotInformed                                                                        =[No name entered]
+
+#not used# kreawooOrdersSyncSetup                                                                            =Order synchronization
+kreawooWoocommerceOrderFirstDateForkreawooToDolibarr                                            =Maximum data recovery date
+kreawooWoocommerceOrderFirstDateForkreawooToDolibarrDescription                                 =Orders with an earlier creation date will be ignored.
+
+kreawooWoocommerceOrderDontAddProductDescriptionIntoLine                                          = Description du produit
+kreawooWoocommerceOrderDontAddProductDescriptionIntoLineDescription                               = Ne pas inserer la description longue du produit sur WooCommerce (traduite) dans la ligne de produit
+kreawooWoocommerceOrderDefaultLanguageIfNotProvided                                               = Langue de la commande par défaut
+kreawooWoocommerceOrderDefaultLanguageIfNotProvidedDescription                                    = Langue de la commande par défaut si WPML ne fournit pas la langue (Cas si une commande est créée depuis le backoffice, ...)
+kreawooWoocommerceOrderMetaDataInProductLineToDescriptionForkreawooToDolibarr                   =Product line metadata
+kreawooWoocommerceOrderMetaDataInProductLineToDescriptionForkreawooToDolibarrDescription        =Adds product line metadata from the WooCommerce order to the product line description in the Dolibarr order<br>Product line metadata from WooCommerce orders must have the 'display_key' and 'display_value' properties for this feature to work.
+kreawooWoocommerceOrderFilterMetaDataInProductLineToDescriptionForkreawooToDolibarr             =Product line metadata
+kreawooWoocommerceOrderFilterMetaDataInProductLineToDescriptionForkreawooToDolibarrDescription  =Comma-separated list of metadata keys to be included or excluded from the description.
+kreawooExclude                                                                                    =Exclude
+kreawooInclude                                                                                    =Include
+
+kreawooSynchronize                                                                                =Synchronize
+kreawooTotalDelta                                                                                 =KreaWoo Total Delta
+
+ECOMMERCE_ACCOUNTING_PRODUCT_BUY_ACCOUNT                = Default accounting account for purchased products (used if not defined in product file or Dolibarr)
+ECOMMERCE_ACCOUNTING_PRODUCT_BUY_INTRA_ACCOUNT          = Default accounting account for products purchased in EEC (used if not defined in product sheet or Dolibarr).
+ECOMMERCE_ACCOUNTING_PRODUCT_BUY_EXPORT_ACCOUNT         = Default accounting account for products purchased and imported outside EEC (used if not defined in product data sheet or Dolibarr).
+ECOMMERCE_ACCOUNTING_PRODUCT_SOLD_ACCOUNT               = Default account for products sold (used if not defined in product file or Dolibarr)
+ECOMMERCE_ACCOUNTING_PRODUCT_SOLD_INTRA_ACCOUNT         = Default account for products sold in EEC (used if not defined in product data sheet or Dolibarr).
+ECOMMERCE_ACCOUNTING_PRODUCT_SOLD_EXPORT_ACCOUNT        = Default account for products sold and exported outside EEC (used if not defined in the product file or in Dolibarr).
+ECOMMERCE_ACCOUNTING_SERVICE_BUY_ACCOUNT                = Default accounting account for purchased services (used if not defined in service file or Dolibarr)
+ECOMMERCE_ACCOUNTING_SERVICE_BUY_INTRA_ACCOUNT          = Default accounting account for services purchased in the EEC (used if not defined in the service file or in Dolibarr).
+ECOMMERCE_ACCOUNTING_SERVICE_BUY_EXPORT_ACCOUNT         = Default account for services purchased and imported outside EEC (used if not defined in the service file or in Dolibarr).
+ECOMMERCE_ACCOUNTING_SERVICE_SOLD_ACCOUNT               = Default accounting account for services sold (used if not defined in the service file or in Dolibarr)
+ECOMMERCE_ACCOUNTING_SERVICE_SOLD_INTRA_ACCOUNT         = Default accounting account for services sold (used if not defined in services file or Dolibarr)
+ECOMMERCE_ACCOUNTING_SERVICE_SOLD_EXPORT_ACCOUNT        = Default account for services sold and exported outside EEC (used if not defined in the service file or in Dolibarr).
+
+StockableProduct            = Activate stock management
+StockableProductDescription = Si cette option est désactivée, la modification du stock pour cet élément n'est pas prise en compte. Les mouvements de stock ne seront pas pris en compte dans les commandes client, commande fournisseur, expédition, réception, ordre de fabrication.<br /> Dans les faits, cette option se comporte comme une activation/désactivation du module stock mais à l'échelle du produit/service
+StockDisabled               = Stock disabled
+StockEnabled                = Stock activated
+ClearLastUpdateDate                     = Delete date
+AreYouSureYouWantToDeleteLastUpdateDate = Are you sure you want to delete the last update date ?
+
+############################################################################################
+# Web Hooks
+############################################################################################
+kreawooMenuWebHooks                                                                               =Web hooks
+
+kreawooWebHooksStatusNotProcessed                                                                 =Waiting to be processed
+kreawooWebHooksStatusProcessed                                                                    =Processed
+kreawooWebHooksStatusError                                                                        =Error
+kreawooWebHooksStatusWarning                                                                      =Caution
+kreawooWebHooksStatusShortNotProcessed                                                            =Waiting to be processed
+kreawooWebHooksStatusShortProcessed                                                               =Processed
+kreawooWebHooksStatusShortError                                                                   =Error
+kreawooWebHooksStatusShortWarning                                                                 =Caution
+
+kreawooWebHooks                                                                                   =Web hooks
+kreawooListOfWebHooks                                                                             =Web hooks List
+kreawooDeliveryId                                                                                 =Delivery ID
+kreawooWebHookId                                                                                  =ID
+kreawooWebHookTopic                                                                               =Subject
+kreawooWebHookResource                                                                            =Resource
+kreawooWebHookEvent                                                                               =Event
+kreawooWebHookSignature                                                                           =Signature
+kreawooWebHookSource                                                                              =Source
+kreawooWebHookData                                                                                =Data
+kreawooProcessedDate                                                                              =Processing date
+kreawooErrorMessage                                                                               =Error message
+
+kreawooWebHooksSetToProcess                                                                       =Reschedule for processing
+kreawooWebHooksSetProcessed                                                                       =Consider as treated
+
+kreawooConfirmMassSetToProcess                                                                    =Confirmation of mass processing
+kreawooConfirmMassSetToProcessQuestion                                                            =Are you sure you want to reprocess the %s selected record(s)?
+kreawooConfirmMassSetProcessed                                                                    =Confirmation of mass processing
+kreawooConfirmMassSetProcessedQuestion                                                            =Are you sure you want to process the %s selected record(s)?
+
+kreawooBoxWebHooks                                                                                =KreaWoo - Web hooks
+kreawooNoRecordedWebHooks                                                                         =No Web hooks registered
+
+kreawooCheckWebHooksStatus                                                                        =Web hook status check (WebHooks)
+kreawooSuccessCheckWebHooksStatus                                                                 =The %s WebHooks of the “%s” site (ID: %s) are enabled
+kreawooSendEmailErrorCheckWebHooksStatus                                                          =Send error notification e-mail
+kreawooNotifyEmailCheckWebHooksStatusErrorSubject                                                 =[KreaWoo] Error checking Web hook status
+kreawooCheckWebHooksStatusSuccess                                                                 =WebHooks status check completed successfully
+
+kreawooCheckWebHooksVolumetry                                                                     =Verification of Web hook volume
+kreawooErrorCheckWebHooksVolumetry                                                                =The number of WebHooks waiting to be processed on the “%s” site (ID: %s) has exceeded the volume (%s / %s).
+kreawooSendEmailErrorCheckWebHooksVolumetry                                                       =WebHooks volume overrun notification email sent
+kreawooSendEmailErrorCheckWebHooksVolumetryErrorSubject                                           =[KreaWoo] Error checking Web hooks volume (WebHooks)
+kreawooCheckWebHooksVolumetrySuccess                                                              =WebHooks volumetric check successfully completed
+
+#not used# kreawooSynchronizeStocksToSite                                                                  = Stocks update
+kreawooSynchronizeStocksToSiteSuccess                                                             = Stock update successfully completed
+kreawooErrorWhenSynchronizeStocksToSite                                                           = Errors occurred when updating stocks
+
+
+#not used# kreawooWoocommerceConnect                                          =Connection error to site '%s': %s
+kreawooWoocommerceConvertRemoteObjectIntoDolibarrCommande            =Order retrieval error on site '%s':
+kreawooWoocommerceConvertRemoteObjectIntoDolibarrProduct             =Error retrieving products on site '%s':
+kreawooWoocommerceConvertRemoteObjectIntoDolibarrProductVariations   =Error retrieving variations of remote product 'id:%s' on site '%s':
+kreawooWoocommerceCheckRemoteProductExist                            =Error when checking the existence of product %s on site '%s':
+kreawooWoocommerceConvertRemoteObjectIntoDolibarrSociete             =Error retrieving companies on site '%s':
+#not used# kreawooWoocommerceConvertRemoteObjectIntoDolibarrSocpeople  =Error retrieving companies (for contacts/addresses) on site '%s': %s
+kreawooWoocommerceCreateRemoteProduct                                =Error creating product 'id:%s' on site '%s':
+#not used# kreawooWoocommerceCreateRemoteProductLink                   =Error creating the link for product 'id:%s' for site '%s': %s
+kreawooWoocommerceGetCategoryData                                    =Error retrieving data from remote category 'id:%s' on site '%s':
+kreawooWoocommerceGetCommandeToUpdate                                =Error retrieving the list of orders to update on site '%s':
+kreawooWoocommerceGetProductToUpdate                                 =Error retrieving the list of products to update on site '%s':
+kreawooWoocommerceGetRemoteCategoryTree                              =Error retrieving the list of categories to update on site '%s':
+kreawooWoocommerceGetSocieteToUpdate                                 =Error retrieving the list of companies to update on site '%s':
+kreawooWoocommerceSendFileForCommande                                =Error linking file with remote command 'id:%s' on site '%s':
+kreawooWoocommerceSendFileForCommandeInWordpress                     =Error sending file for remote command 'id:%s' in Wordpress media on site '%s': %s
+kreawooWoocommerceUpdateRemoteCommande                               =Error updating remote command 'id:%s' on site '%s':
+kreawooWoocommerceUpdateRemoteProduct                                =Error updating remote product 'id:%s' on site '%s':
+kreawooWoocommerceUpdateRemoteTranslatedProduct                      =Error updating translation 'id:%s' of remote product 'id:%s' on site '%s':
+kreawooWoocommerceUpdateRemoteProductGetRemoteProduct                =Error retrieving remote product 'id:%s' on site '%s':
+kreawooWoocommerceUpdateRemoteProductSendImage                       =Error sending an image for remote product 'id:%s' in Wordpress media to site '%s': %s
+kreawooWoocommerceUpdateRemoteProductVariation                       =Error updating variation 'id:%s' of remote product 'id:%s' on site '%s':
+kreawooWoocommerceUpdateRemoteTranslatedProductVariation             =Error updating translation 'id:%s' of variation 'id:%s' of remote product 'id:%s' on site '%s'
+kreawooWoocommerceUpdateRemoteSociete                                =Error updating remote company 'id:%s' on site '%s':
+kreawooWoocommerceUpdateRemoteSocpeople                              =Error updating contacts/addresses of remote company 'id:%s' on site '%s':
+kreawooWoocommerceUpdateRemoteStockProduct                           =Error updating stocks (%s) of remote product 'id:%s' on site '%s':
+kreawooWoocommerceUpdateRemoteStockTranslatedProduct                 =Error updating stocks (%s) of translation 'id:%s' of remote product 'id:%s' on site '%s':
+kreawooWoocommerceUpdateRemoteStockProductVariation                  =Stock update error (%s) of variation 'id:%s' of remote product 'id:%s' on site '%s':
+kreawooWoocommerceUpdateRemoteStockTranslatedProductVariation        =Error updating stocks (%s) of the translation 'id:%s' of the variation 'id:%s' of the remote product 'id:%s' on the site
+kreawooWoocommerceGetAllWoocommerceAttributes                        =Error retrieving attribute data on site '%s':
+kreawooWoocommerceGetAllWoocommerceAttributeTerms                    =Error retrieving data for attribute '%s' on site '%s':
+kreawooWoocommerceGetAllWoocommerceTaxClass                          =Error retrieving tax class data on site '%s':
+kreawooWoocommerceGetWoocommerceTaxes                                =Error retrieving tax data on site '%s':
+kreawooWoocommerceCreateRemoteProductSendImage                       =Error sending an image for product 'ref:%s' in Wordpress media on site '%s': %s
+kreawooWoocommerceGetAllWoocommercePaymentGateways                   =Error retrieving payment method data on site '%s':
+kreawooWoocommerceGetAllWoocommerceRemoteWarehouses                  =Error retrieving data from remote warehouses on site '%s':
+kreawooWoocommerceGetTranslatedProductVariation                      =Error recovering the translation 'id:%s' of the variation 'id:%s' of the remote product 'id:%s' on the site '%s':
+#not used# kreawooWoocommerceErrorGetRemoteProduct                     =Error retrieving remote product 'id:%s' on site '%s':
+kreawooWoocommerceGetAllWoocommerceRemoteShippingModes               =Error retrieving data from remote transport zones on site '%s':
+kreawooWoocommerceGetAllWoocommerceRemoteShippingZoneMethods         =Erreur de récupération des données des modes de transport distants sur le site '%s' et la zone (ID distant : %s):
+
+kreawooWoocommerceStatusProductSupported                           = Supported statuses
+kreawooWoocommerceStatusProductSupportedDescription                = List of supported statuses for synchronization. (empty for all statuses; list of values ​​separated by commas)<br>Only values ​​returned by the API are supported. ex: draft, pending, private, publish, ...
+kreawooWoocommerceProductBackordersIfPurchasable                   = Gérer les ventes de produits
+kreawooWoocommerceProductBackordersIfPurchasableDescription        = Gérer les ventes de produits qui ne sont plus en stock physiquement. La valeur par défaut est 'no'.<br>Options:<br> - 'no' (Ne pas autoriser) : C'est le réglage par défaut. Si le stock tombe à 0, le produit est marqué comme "Rupture de stock" et le bouton d'achat disparaît.<br> - 'notify' (Autoriser, mais informer le client) : Le client peut toujours acheter le produit, mais un message s'affiche sur la page produit (et dans le panier) pour lui dire : "Disponible sur commande". Cela évite les frustrations liées aux délais de livraison imprévus.<br> - 'yes' (Autoriser sans notification) : Le produit reste achetable normalement, même avec un stock négatif. Pour le client, c'est comme si le produit était toujours en rayon.
+
+kreawoongWoocommerceStatus                                         =Product status on site [%s]
+kreawoongWoocommerceDescription                                    =Long product description on site
+kreawoongWoocommerceShortDescription                               =Short product description on site
+kreawoongWoocommerceOnlinePayment                                  =Online payment
+kreawoongWoocommerceTaxClass                                       =VAT class for site [%s]
+kreawoongWoocommerceManageStock                                    =Enable stock management on site [%s]
+kreawoongWoocommerceStockStatus                                    =Stock status on site [%s]
+kreawoongWoocommerceStockStatusInStock                             =In stock
+kreawoongWoocommerceStockStatusOutOfStock                          =Out of stock
+kreawoongWoocommerceStockStatusOnBackorder                         =On backorder
+kreawoongWoocommerceDontUpdateStock                                =Do not synchronize stock quantity with site [%s]
+
+kreawoongWoocommerceDictAttribute                                  =List of attributes on Woocommerce
+kreawoongWoocommerceDictAttributesUpdated                          =Attributes dictionary since Woocommerce update.
+kreawooWoocommerceConfirmUpdateDictAttributes                      =Confirm the update of the attribute dictionary for this site?
+kreawooWoocommerceUpdateDictAttributes                             =Updating the attribute dictionary
+kreawoongWoocommerceDictTaxClass                                   =List of VAT classes on Woocommerce
+kreawoongWoocommerceDictTaxClassUpdated                            =Dictionary of VAT classes from Woocommerce updated.
+kreawooWoocommerceConfirmUpdateDictTaxClasses                      =Confirm the update of the VAT class dictionary for this site?
+kreawooWoocommerceUpdateDictTaxClasses                             =Updating the VAT class dictionary
+kreawooWoocommerceErrorDisableDictTaxClass                         =Error deactivating a VAT class, code: "%s", error: "%s"
+kreawooWoocommerceErrorAddDictTaxClass                             =Error adding a VAT class, code: "%s", name: "%s", error: "%s"
+kreawooWoocommerceErrorUpdateDictTaxClass                          =Error updating a VAT class, code: "%s", error: "%s"
+
+kreawoongWoocommerceDictLang                                       =List of languages ​​on Woocommerce
+
+kreawoongWoocommerceDictTaxRate                                    =List of VAT rates on Woocommerce
+kreawooWoocommerceErrorDisableDictTaxRate                          =Error deactivating a VAT rate, ID: "%s", error: "%s"
+kreawooWoocommerceErrorAddDictTaxRate                              =Error adding a VAT rate, ID: "%s", error: "%s"
+kreawooWoocommerceErrorUpdateDictTaxRate                           =Error updating a VAT rate, ID: "%s", error: "%s"
+
+kreawooWoocommerceErrorDisableDictAttribute                        =Error deactivating a VAT rate, ID: "%s", error: "%s"
+kreawooWoocommerceErrorAddDictAttribute                            =Error adding a VAT rate, ID: "%s", error: "%s"
+kreawooWoocommerceErrorUpdateDictAttribute                         =Error updating a VAT rate, ID: "%s", error: "%s"
+
+kreawooUpdateVirtualStock                                                     = Virtual stocks
+kreawooUpdateVirtualStockDescription                                          = Updating site stock with virtual stock instead of physical stock
+kreawooWoocommerceEnableWarehousePluginSupport                                = Warehouse Management Extension
+kreawooWoocommerceEnableWarehousePluginSupportDescription                     = Select the supported extension managing warehouses installed on WooCommerce
+kreawooWoocommerceWarehousePluginStockLocationForWooCommerce                  = Stock Locations for WooCommerce
+kreawooWoocommerceWarehousePluginWooCommerceMultiLocationsInventoryManagement = WooCommerce Multi Locations Inventory Management
+
+kreawooWoocommerceEnableProductWpmlPluginSupport                   = WPML
+kreawooWoocommerceEnableProductWpmlPluginSupportDescription        = Enables support for the “WPML” extension installed on WooCommerce
+
+kreawoongWoocommerceStatusDraft                                    =Draft
+kreawoongWoocommerceStatusPending                                  =Waiting for proofreading
+kreawoongWoocommerceStatusPrivate                                  =Private
+kreawoongWoocommerceStatusPublish                                  =Published
+
+#not used# kreawoongWoocommerceWithoutFirstnameLastname                       =No last name/first name provided
+#not used# kreawoongWoocommerceLastnameNotInformed                            =[Name not provided]
+
+kreawoongWoocommerceOrderStatus                                    =Status on site [%s]
+kreawoongWoocommerceOrderStatusDraft                               =Draft
+kreawoongWoocommerceOrderStatusPending                             =Waiting for payment
+kreawoongWoocommerceOrderStatusProcessing                          =In progress
+kreawoongWoocommerceOrderStatusOnHold                              =On hold
+kreawoongWoocommerceOrderStatusCompleted                           =Completed
+kreawoongWoocommerceOrderStatusCancelled                           =Canceled
+kreawoongWoocommerceOrderStatusRefunded                            =Refunded
+kreawoongWoocommerceOrderStatusFailed                              =Failed
+kreawoongWoocommerceOrderStatusTrash                               =Basket
+
+kreawoongWoocommerceOrderLink                                      =Link to site order [%s]
+
+kreawoongWoocommerceExtrafieldsOptionsOf                           = Setting additional attributes: %s
+kreawoongWoocommerceExtrafieldsMetaData                            = Woocommerce metadata
+kreawoongWoocommerceExtrafieldsAttribute                           = WooCommerce attribute
+kreawoongWoocommerceExtrafieldsOptionsDefaultValueDescription      = Default value of the additional attribute (If empty the one defined in its configuration)
+kreawoongWoocommerceExtrafieldsOptionsMetaDataDescription          = Enter the name of the metadata corresponding to this additional attribute
+kreawoongWoocommerceExtrafieldsOptionsAttributeDescription         = The values ​​of the Dolibarr complementary field must be in the form "Name, Name" example: "Yellow, Yellow"
+
+kreawooWoocommerceCreateRemoteCategoryParentNotCreated             = Error for site '%s' when searching for parent ID of category '%s' (slug: '%s')
+kreawooWoocommerceCreateRemoteBatchCategories                      = Error creating categories in batch on site '%s':
+kreawooWoocommerceCreateRemoteBatchProducts                        = Error creating batch products on site '%s': %s
+
+kreawooWoocommerceCreateRemoteBatchCategory                        = Error creating category (slug: %s) on site '%s':
+kreawooWoocommerceCreateRemoteBatchProduct                         = Error creating the product (SKU: %s) on site '%s': %s
+kreawooWoocommerceUpdateRemoteBatchProduct                         = Error updating product (SKU: %s) on site '%s': %s
+
+kreawooWoocommerceErrorBaseTypeOfProductWithSiteParameter          = Price base error (excluding tax/tax included) for entering the price of product '%s', it must be in '%s' for site '%s'.
+
+kreawooWoocommerceProductSyncPrice                                 = Sales price synchronization
+kreawooWoocommerceProductSyncPriceDescription                      = This setting determines what type of price in WooCommerce should be synchronized with the sale price in Dolibarr
+kreawooWoocommerceRegularPrice                                     = Regular price
+kreawooWoocommerceSellingPrice                                     = Selling price
+
+kreawooWoocommerceProductVariationMode                             = Synchronization of variations
+kreawooWoocommerceProductVariationOneToOne                         = One => one
+kreawooWoocommerceProductVariationAllToOne                         = All => one
+kreawooWoocommerceProductVariationModeDescription                  = Choose how we synchronize the variations<br>'One => one' will create a product for each variation of the WooCommerce product<br>'All => one' will create one product and only one for the varying product with the parent information and the meta-data of the first variation
+
+kreawoongWoocommerceRegularPrice                                   =Regular price on site [%s]
+kreawoongWoocommerceSalePrice                                      =Sale price on site [%s]
+kreawoongWoocommerceDateOnSaleFrom                                 =Sale price start date on site [%s]
+kreawoongWoocommerceDateOnSaleTo                                   =Sale price end date on site [%s]
+
+kreawoongWoocommerceCompanyRole                                    = Role for site “%s”
+kreawoongWoocommerceCompanyRole_administrator                      = Administrator
+kreawoongWoocommerceCompanyRole_author                             = Author
+kreawoongWoocommerceCompanyRole_contributor                        = Contributor
+kreawoongWoocommerceCompanyRole_customer                           = Customer
+kreawoongWoocommerceCompanyRole_editor                             = Editor
+kreawoongWoocommerceCompanyRole_subscriber                         = Subscriber
+kreawoongWoocommerceCompanyRole_shop_manager                       = Store manager
+kreawoongWoocommerceCompanyRole_                                   = No role on this site
+
+kreawooWoocommerceCustomerRolesSupported                           = Supported user roles
+kreawooWoocommerceCustomerRolesSupportedDescription                = User role supported for synchronization. (empty for all roles)<br>Only values ​​returned by the API are supported. ex: customer, administrator, author, contributor, editor, subscriber, shop_manager, ...<br>Only users of the defined role will be processed<br>Only guest orders or whose customer is synchronized will be processed
+
+kreawooWooCommerceBundleComposite                                  =Composition of the kit:
+
+kreawooWooCommerceErrorOrderStatusNotConfigured                    = The correspondence of the "%s" status of the order is not configured in the site configuration (it may be necessary to add it in the additional field of the order "Status on the site [%s]")
+kreawooWooCommerceErrorDiscountCodeServiceNotConfigured            = The service managing promotional codes has not been configured in the settings of the “%s” site.
+kreawooWooCommerceErrorPwGiftCardsServiceNotConfigured             = The service managing gift cards has not been configured in the site settings "%s".
+
+kreawooWoocommerceErrorDisableDictTaxClass                         = Error when deactivating the tax class line (Code: %s): %s
+kreawooWoocommerceErrorUpdateDictTaxClass                          = Error updating tax class line (Code: %s): %s
+kreawooWoocommerceErrorAddDictTaxClass                             = Error adding tax class line (Code: %s): %s
+kreawooWoocommerceErrorDisableDictTaxRate                          = Error disabling tax rate line (ID: %s): %s
+kreawooWoocommerceErrorUpdateDictTaxRate                           = Error updating tax rate line (ID: %s): %s
+kreawooWoocommerceErrorAddDictTaxRate                              = Error adding tax rate line (ID: %s): %s
+kreawooWooCommerceErrorTaxNotFound                                 = Error the tax was not found in those synchronized (ID: %s)
+kreawooWooCommerceErrorDontSupportMultiTaxes                       = The module does not currently support multi-tax.
+kreawooWoocommerceErrorGetWoocommerceWebHooks                      = Error retrieving web hooks on site '%s':
+kreawooWoocommerceErrorTaxClassNotFoundFromTaxRate                 = Tax '%s' not found in tax dictionary of KreaWoo module for site '%s' for product '%s'
+kreawooWoocommerceErrorGetOrderData                                = Error retrieving data from remote command '%s' from site '%s'
+kreawooWooCommerceErrorLanguageMatchNotFound                       = The language match for code '%s' and site ID '%s' was not found in the dictionary 'List of languages ​​on Woocommerce'
+
+kreawooWoocommerceGetRemoteProduct                                 = Retrieving the remote product (remote ID: %s) from site '%s'
+kreawooErrorWarehouseIdNotSpecifiedForTheLine                      = The remote warehouse was not found for product line %s
+kreawooErrorWarehouseIdNotConfiguredForRemoteWarehouse             = The dolibarr warehouse has not been configured for the remote warehouse (ID: %s) on site '%s'
+kreawooErrorWhenMovementStockOnDifferentWarehouse                  = Error when updating product stocks in different warehouses
+kreawooErrorValidOrderWarehouseNotConfigured                       = The default warehouse for order validation is not configured for site '%s'
+kreawooErrorGetImportKeyOfLine                                     = Error retrieving the import key for line '%s' of part '%s'
+
+kreawooWooCommerceStoreCredit                                      = Shop Credit
+
+kreawooLinks                                                       =Remote IDs in stores
+kreawooForceUpdate                                                 = Forcer la synchronisation même s'il est déjà à jour (Seulement pour les Produits et Tiers/Contacts)
+
+#######################################################################
+# API
+#######################################################################
+kreawooRequestData               = Query data
+kreawooRequestProtocolVersion    = Protocol version
+kreawooRequestUri                = Url
+kreawooRequestMethod             = Method
+kreawooRequestTarget             = Target
+kreawooRequestHeaders            = Headers
+kreawooRequestBody               = Body
+kreawooResponseData              = Response data
+kreawooResponseProtocolVersion   = Protocol version
+kreawooResponseCode              = Coded
+kreawooResponseReasonPhrase      = Reason
+kreawooResponseHeaders           = Headers
+kreawooResponseBody              = Body
+kreawooErrorBadConvertResult     = Wrong format of API query response
+
+############################################################################################
+# Errors
+############################################################################################
+kreawooErrorWhenSynchronizeCustomers                                                              =Errors occurred while synchronizing clients (third parties/contacts)
+kreawooErrorWhenSynchronizeProducts                                                               =Errors occurred while syncing products
+kreawooErrorWhenSynchronizeOrders                                                                 =Errors occurred while syncing orders
+kreawooErrorFetchThirdPartyLinkByRemoteId                                                         =Error loading third party sync link (Remote ID: %s, Site ID: %s)
+kreawooErrorAnonymousThirdPartyNotConfigured                                                      =The third party for anonymous (not logged in) users is not configured (Site ID: %s)
+kreawooErrorFetchThirdParty                                                                       =Third party loading error (ID: %s)
+kreawooErrorUpdateThirdParty                                                                      =Error when updating the third party in Dolibarr (ID: %s)
+kreawooErrorCreateThirdParty                                                                      =Error when creating the third party in Dolibarr
+kreawooErrorMoveContactsInAnonymousThirdPartyToNewOrFoundThirdParty                               =Error when moving third party contacts for anonymous users (not logged in) to the new third party found (ID: %s) using email: %s
+kreawooErrorUpdateThirdPartyLink                                                                  =Error updating third party sync link
+kreawooErrorCreateThirdPartyLink                                                                  =Error creating third party sync link
+kreawooErrorWhenSynchronizeCustomer                                                               =Error syncing client (Remote ID: %s)
+kreawooErrorProductRefMandatory                                                                   =The product reference must be entered on your remote product (e.g. SKU)
+kreawooErrorFetchProductLinkByRemoteId                                                            =Error loading product sync link (Remote ID: %s, Site ID: %s)
+kreawooErrorFetchProduct                                                                          =Error loading product (ID: %s)
+kreawooErrorFetchProductByRef                                                                     =Product loading error (Ref.: %s)
+kreawooErrorFetchProductLinkByProductId                                                           =Error loading product sync link (Product ID: %s, Site ID: %s)
+kreawooErrorFetchProductLink                                                                      =Error loading product sync link (Link ID: %s, Site ID: %s)
+kreawooErrorProductAlreadyLinkedWithRemoteProduct                                                 =The product with reference %s is already linked to remote product ID: %s
+kreawooErrorUpdateProduct                                                                         =Error when updating the product in Dolibarr (ID: %s)
+kreawooErrorCreateProduct                                                                         =Error when creating the product in Dolibarr
+kreawooErrorUpdateProductPrice                                                                    =Error when updating product price in Dolibarr
+kreawooErrorUpdateProductStock                                                                    =Error when updating product stock in Dolibarr
+kreawooErrorSetProductUpdateDate                                                                  =Error when updating product modification date in Dolibarr
+kreawooErrorProductCategoryNotConfigured                                                          =The synced product category is not configured (Site ID: %s)
+kreawooErrorWhenSynchronizeCategories                                                             =Errors occurred while syncing product categories
+kreawooErrorNumberCategoryToLinkMismatched                                                        =Not all categories of products to be linked (%s) were found in those synchronized (%s)
+kreawooErrorDownloadProductImage                                                                  =Error retrieving image (%s) for product 'id:%s' from remote product 'id:%s' on site '%s'
+kreawooErrorRemoveObsoleteProductImage                                                            =Error removing obsolete images for product 'id:%s' from remote product 'id:%s' on site '%s'
+kreawooErrorUpdateProductLink                                                                     =Error updating product sync link
+kreawooErrorCreateProductLink                                                                     =Error creating product sync link
+kreawooErrorWhenSynchronizeProduct                                                                =Error syncing product (Remote ID: %s)
+kreawooErrorWhenConvertProductData                                                                =Error converting product data (remote ID: %s)
+kreawooErrorFetchOrderLinkByRemoteId                                                              =Error loading command sync link (Remote ID: %s, Site ID: %s)
+kreawooErrorFetchOrder                                                                            =Error loading order (ID: %s)
+kreawooErrorFetchOrderByRefExt                                                                    =Error loading order (ext. ref.: %s)
+kreawooErrorUpdateOrder                                                                           =Error when updating the order in Dolibarr (ID: %s)
+kreawooErrorCreateOrder                                                                           =Error when creating the order in Dolibarr
+#not used# kreawooErrorUpdateTotalOrder                                                                      =Error updating correct order prices in Dolibarr
+#not used# kreawooErrorOrderDefineBuyPrice                                                                   =Error when updating the price in Dolibarr (ID: %s, Price: %s)
+#not used# kreawooErrorOrderAddLine                                                                          =Error when adding a product line to the order
+#not used# kreawooErrorOrderAddDeliveryLine                                                                  =Error when adding a delivery line to the order
+kreawooErrorValidOrder                                                                            =Error during order validation
+kreawooErrorSetStatusOrderValidated                                                               =Error passing the order to 'Validated'
+kreawooErrorSetStatusOrderShipmentOnProcess                                                       =Error changing command to 'In Progress'
+kreawooErrorCancelOrder                                                                           =Error changing order to 'Cancelled'
+kreawooErrorCloseOrder                                                                            =Error changing order to 'Delivered'
+kreawooErrorClassifyOrderBilled                                                                   =Error changing order to 'Processed'
+kreawooErrorPaymentGatewaysNotFound                                                               =Payment method (%s, %s) was not found in those synchronized
+kreawooErrorPaymentGatewaysPaymentMethodNotConfigured                                             =The synchronized payment method (%s, %s) has not been configured for the Dolibarr payment method
+kreawooErrorWhenFetchPaymentMethodByLabel                                                         =Error loading payment method (%s) using its name
+kreawooErrorOrderSetPaymentMethods                                                                =Error updating order payment method
+kreawooErrorUpdateOrderLink                                                                       =Error updating order sync link
+kreawooErrorCreateOrderLink                                                                       =Error creating order sync link
+kreawooErrorWhenSynchronizeOrder                                                                  =Error syncing command (Remote ID: %s)
+kreawooErrorWhenConvertOrderData                                                                  =Error converting order data (remote ID: %s)
+kreawooErrorInvoiceCreate                                                                         =Error when creating the invoice in Dolibarr
+#not used# kreawooErrorUpdateTotalInvoice                                                                    =Error updating correct invoice prices in Dolibarr
+#not used# kreawooErrorInvoiceInsertDiscount                                                                 =Error when inserting the discount on the invoice in Dolibarr
+#not used# kreawooErrorInvoiceDiscountCreate                                                                 =Error creating discount for invoice
+kreawooErrorInvoiceAddLine                                                                        =Error when adding a product line in the invoice
+#not used# kreawooErrorInvoiceGetOrderInternalContacts                                                       =Error retrieving the internal contacts of the command (ID: %s)
+#not used# kreawooErrorInvoiceGetOrderExternalContacts                                                       =Error retrieving the external contacts of the order (ID: %s)
+#not used# kreawooErrorInvoiceAddContact                                                                     =Error adding a contact (ID: %s, Type: %s, Source: %s) to the
+#not used# kreawooErrorInvoiceDefineBuyPrice                                                                 =Error when updating the price in Dolibarr (ID: %s, Price: %s)
+kreawooErrorInvoiceAddLine                                                                        =Error when adding a product line in the invoice
+#not used# kreawooErrorInvoiceAddDeliveryLine                                                                =Error when adding a delivery line to the invoice
+kreawooErrorInvoiceSetPaymentMethods                                                              =Error updating invoice payment method
+kreawooErrorPaymentGatewaysBankAccountNotConfigured                                               =The synchronized payment method (%s, %s) has not been configured for the Dolibarr bank
+kreawooErrorInvoiceValidate                                                                       =Error validating invoice
+kreawooErrorInvoiceCreatePayment                                                                  =Error creating payment on invoice
+kreawooErrorInvoiceAddPaymentToBank                                                               =Error adding payment to bank for invoice
+kreawooErrorInvoiceSetPaid                                                                        =Error classifying the invoice as 'paid'
+kreawooErrorInvoiceGenerateDocument                                                               =Error generating invoice document
+kreawooErrorPaymentGatewaysSupplierNotConfigured                                                  =The synchronized payment method (%s, %s) has not been configured for the third-party provider Dolibarr
+kreawooErrorSupplierInvoiceCreate                                                                 =Error when creating the supplier invoice in Dolibarr
+kreawooErrorSupplierInvoiceAddLine                                                                =Error when adding a product line to the supplier invoice
+kreawooErrorSupplierInvoiceValidate                                                               =Error when validating the supplier invoice
+kreawooErrorSupplierInvoiceCreatePayment                                                          =Error creating payment on supplier invoice
+kreawooErrorSupplierInvoiceAddPaymentToBank                                                       =Error when adding the payment to the bank for the supplier invoice
+kreawooErrorSupplierInvoiceGenerateDocument                                                       =Error generating the supplier invoice document
+kreawooErrorCustomerEmailEmptyForSendInvoiceByEmail                                               =Error, the remote order email is empty for sending the invoice by email
+kreawooErrorPaymentGatewaysMailModelNotConfigured                                                 =The synchronized payment method (%s, %s, language: %s) has not been configured for the Dolibarr email template
+kreawooErrorInvoiceCreateMail                                                                     =Error creating email for sending invoice
+kreawooErrorInvoiceGetExternalContacts                                                            =Error retrieving external invoice contacts (ID: %s)
+kreawooErrorInvoiceCreateSendMailEvent                                                            =Error creating invoice sending event by email
+kreawooErrorInvoiceSendByMail                                                                     =Error sending invoice by email
+kreawooErrorWhenSynchronizeOrderToInvoice                                                         =Error syncing invoice from order (remote ID: %s)
+kreawooErrorSearchThirdPartyByEmail                                                               =Error searching for the third party using their email (email: %s, Site ID: %s)
+kreawooErrorTooManyThirdPartyFoundDueToEmail                                                      =Too many third parties found using their email (email: %s, Site ID: %s)
+kreawooErrorWhenSearchThirdPartyByName                                                            =Error when searching for the third party using its name (Name: %s, Site ID: %s)
+kreawooErrorTooManyThirdPartyFoundDueToName                                                       =Too many third parties found using his name (Name: %s, Site ID: %s)
+kreawooErrorThirdPartyFoundDueToNameIsTheAnonymousThirdParty                                      =Error, the third party found by its name is the third party for anonymous users (not connected)
+kreawooErrorUpdateContact                                                                         =Error when updating the part contact in Dolibarr (Line ID: %s, ID: %s, Type ID: %s, Status: %s)
+kreawooErrorAddContact                                                                            =Error when adding the contact to the room in Dolibarr (ID: %s, Type: %s, Source: %s)
+kreawooErrorGetPaymentGateways                                                                    =Error loading synchronized payment methods (Site ID: %s)
+kreawooErrorGetProductCategories                                                                  =Error loading Dolibarr product categories
+kreawooErrorPrivateThirdPartyTypeNotFound                                                         =The third party type "Individual" with the code "TE_PRIVATE" is not activated or has been deleted from the third party type dictionaries
+kreawooErrorSynchronizeWebHook                                                                    =Error synchronizing queue line (ID: %s, Topic: %s)
+kreawooErrorSetLastSyncDateCustomer                                                               =Error updating the most recent client sync date for the site (ID: %s)
+kreawooErrorSetLastSyncDateProduct                                                                =Error updating the most recent product sync date for the site (ID: %s)
+kreawooErrorSetLastSyncDateOrder                                                                  =Error updating the most recent order sync date for the site (ID: %s)
+kreawooErrorDeleteLastSyncDateCustomer                                                            =Error deleting the most recent client sync date for the site (ID: %s)
+kreawooErrorDeleteLastSyncDateProduct                                                             =Error deleting the most recent product sync date for the site (ID: %s)
+kreawooErrorDeleteLastSyncDateOrder                                                               =Error deleting the most recent order sync date for the site (ID: %s)
+#not used# kreawooErrorUpdatePrivateNote                                                                     =Error updating private note
+kreawooErrorGetEMailTemplate                                                                      =Error retrieving email template
+kreawooErrorWhenCheckOrderExist                                                                   =Error when testing if the order exists in Dolibarr
+kreawooErrorWhenCheckOrderExistFromData                                                           =Error when testing if the order exists in Dolibarr using remote data
+kreawooErrorWhenProcessPendingWebHooks                                                            =Error syncing web hooks queue
+kreawooErrorWebHooksStatusNotActivated                                                            =WebHook "%s" (Remote ID: %s) is not enabled (Additional Info: %s)
+kreawooErrorCheckWebHooksStatus                                                                   =Error checking web hooks for site "%s" (ID: %s)
+kreawooErrorWhenCheckingWebHooksStatus                                                            =Error checking web hooks (WebHooks)
+kreawooErrorTooManyProductLinkToTheRemoteID                                                       =Too many products (IDs: %s) linked to the same remote product (Remote ID: %s, Site ID: %s)
+kreawooErrorDeleteProductLink                                                                     =Error removing link with remote product (remote ID: %s)
+kreawooErrorWhenGetProductToUnlink                                                                =Error when retrieving products to unbind (Site: %s; Data: %s)
+kreawooErrorWhenUnlinkProductByProductId                                                          =Error removing product link (Site: %s; ID: %s)
+kreawooErrorWhenUnlinkProductByRemoteId                                                           =Error removing product link (Site: %s; Remote ID: %s)
+kreawooErrorWhenUnlinkProduct                                                                     =Error removing product link (Site: %s; ID: %s; Remote ID: %s)
+kreawooErrorWhenUnlinkProductCategory                                                             =Error deleting category on product (Site: %s; ID: %s; Category ID: %s)
+kreawooErrorUpdateRefProduct                                                                      =Error when changing the product reference '%s' to the new reference '%s' (it already exists)
+kreawooErrorFetchProductByRef                                                                     =Error loading the product by its reference (Ref: %s)
+kreawooErrorProductNotFoundByRef                                                                  =The product was not found by its reference (Ref: %s)
+kreawooErrorProductRefMandatory2                                                                  =The product "%s" has no reference on the E-Commerce site
+kreawooErrorSynchronizeProductComponent                                                           =Component (Remote ID: %s, Site ID: %s) failed to synchronize
+kreawooErrorFetchProductComponents                                                                =Error retrieving the components constituting the product (ID: %s)
+kreawooErrorAddProductComponent                                                                   =Error adding the component (ID: %s, Qty: %s) constituting the product (ID: %s)
+kreawooErrorUpdateProductComponent                                                                =Error updating the component (ID: %s, Qty: %s) constituting the product (ID: %s)
+kreawooErrorDelProductComponent                                                                   =Error deleting the component (ID: %s) constituting the product (ID: %s)
+#not used# kreawooErrorSetOrderCorrectAmount                                                                 =Error when forcing the price including tax of the order
+#not used# kreawooErrorSetInvoiceCorrectAmount                                                               =Error when forcing the invoice price including tax
+kreawooErrorConnectAPI                                                                            =Error when forcing the invoice price including tax
+kreawooErrorUpdateThirdPartyLanguage                                                              =Error updating third party language (ID: %s)
+kreawooErrorDefineBuyPrice                                                                        =Error when updating the price in Dolibarr (ID: %s, Price: %s)
+kreawooErrorAddLine                                                                               =Error adding a product line
+kreawooErrorProductRefMismatch                                                                    = Le produit de la commande (ID distant %s, Ref: %s) n'est pas le même ref du produit lié dans dolibarr (ID: %s, Ref: %s)
+
+############################################################################################
+# Warnings
+############################################################################################
+#not used# kreawooWarningWrongAmountTTCWithPaid                                                   =Attention!! The customer paid a different amount: %s including tax
+kreawooWarningOrderThirdPartyNotSupported                                                         =Attention!! The order (ID: %s) is ignored because it was created by a customer (ID: %s) whose type is not allowed in the configuration
+kreawooWarningSynchronizeWebHook                                                                  =Attention!! When synchronizing the queue line (ID: %s, Topic: %s)
+#not used# kreawooWarningUpdateOrderNotSynchronized                                                        =Attention!! Attempting to update an order out of sync
+kreawooWarningNotifyEmailErrorCheckWebHooksStatusNotDefined                                       =Attention!! The global variable ECOMMERCE_NOTIFY_EMAIL_ERRORS_CHECK_WEBHOOKS_STATUS (containing email addresses separated by commas) is inactive
+kreawooWarningNotifyEmailErrorCheckWebHooksVolumetryNotDefined                                    =Attention!! The global variable ECOMMERCE_NOTIFY_EMAIL_ERRORS_CHECK_WEBHOOKS_VOLUMETRY (containing email addresses separated by commas) is inactive
+
+############################################################################################
+# About
+############################################################################################
+kreawooAboutModuleDevelopedBy                                                                     =Module developed by %s
+kreawooAboutModuleDesignedBy                                                                      =This module was designed by %s, expert in integration and custom development around <b>Dolibarr ERP/CRM</b>.
+kreawooAboutCommitment                                                                            =Our commitment: deliver robust, scalable tools aligned with professional requirements.
+kreawooAboutPreferredPartner                                                                      =%s is part of the official <b>Dolibarr Preferred Partner</b> program, a mark of quality and expertise.
+kreawooAboutTechnicalSupportTitle                                                                 =Technical support
+kreawooAboutTechnicalSupportDesc                                                                  =For any assistance request or feedback regarding this module, please submit a request through our dedicated platform:
+kreawooAboutAccessSupport                                                                         =Access support
+kreawooAboutCopyTechnicalInfo                                                                     =Copy module technical information
+kreawooAboutCommercialContactTitle                                                                =Commercial contact
+kreawooAboutCommercialContactDesc                                                                 =For any additional information, custom project, or support need:
+kreawooAboutDiscoverModulesTitle                                                                  =Discover our other modules
+kreawooAboutDiscoverModulesDesc                                                                   =Find all our solutions on %s, the official Dolibarr modules marketplace.
+kreawooAboutSupportLineModule                                                                     =Module
+kreawooAboutSupportLineModuleVersion                                                              =Module version
+kreawooAboutSupportLineDolibarrVersion                                                            =Dolibarr version
+kreawooAboutSupportLineDolibarrInitialVersion                                                     =Dolibarr initial installation version
+kreawooAboutSupportLineCheckboxLeftColumn                                                         =Left selection column option
+kreawooAboutSupportLinePhpVersion                                                                 =PHP version
+kreawooAboutSupportIssueDescription                                                               =Description of your issue:
+KreapAboutModuleLabel                                                                             =Module
+KreapAboutVersionLabel                                                                            =Version
+KreapAboutEditorLabel                                                                             =Editor
+KreapAboutLicenseLabel                                                                            =License
+KreapAboutLicenseValue                                                                            =GPLv3 or later
+KreapAboutSupportLabel                                                                            =Support
+KreapAboutWebsiteLabel                                                                            =Website
+
+############################################################################################
+# Category correspondence setup
+############################################################################################
+kreawooCategoryCorrespondenceTab                                                                  =Categories
+kreawooCategoryCorrespondence                                                                     =Category correspondence
+kreawooCategoryCorrespondenceDescription                                                          =Map local Dolibarr product categories to WooCommerce product categories for this site.
+kreawooCategoryCorrespondenceList                                                                 =Existing category correspondences
+kreawooCategoryLocal                                                                              =Local category
+kreawooCategoryLocalDescription                                                                   =Select a Dolibarr product category inside the configured root category.
+kreawooCategoryRemote                                                                             =Remote category
+kreawooCategoryRemoteDescription                                                                  =Select the matching WooCommerce category.
+kreawooCategoryRemoteManualInputHint                                                             =Remote categories cannot be loaded; enter the remote category ID manually.
+kreawooCategorySetCorrespondence                                                                  =Save correspondence
+kreawooCategoryCorrespondenceSaved                                                                =Category correspondence saved.
+kreawooCategoryCorrespondenceDeleted                                                              =Category correspondence removed.
+kreawooCategoryCorrespondenceDeletedWithRemote                                                    =Category correspondence removed and remote category deleted.
+kreawooCategoryCreateRemote                                                                       =Create remote category
+kreawooCategoryCreateRemoteDescription                                                            =Create the selected local category on WooCommerce and save the correspondence.
+kreawooCategoryCreateRemoteSelectDescription                                                      =Only categories without correspondence are listed.
+kreawooCategoryCreateRemoteName                                                                   =Remote category name
+kreawooCategoryCreateRemoteNameDescription                                                        =Optional. Leave empty to use the local category label.
+kreawooCategoryRemoteCreatedCount                                                                 =%s remote category correspondence(s) created.
+kreawooCategoryNoUnmapped                                                                         =No unmapped local category is available.
+kreawooCategoryAlreadyMapped                                                                      =The selected local category is already mapped.
+kreawooCategoryNotInSiteTree                                                                      =The selected category is outside the configured product root category for this site.
+kreawooCategoryRemoteUnavailable                                                                  =Unable to load WooCommerce categories for this site.
+kreawooCategoryRemoteNotFound                                                                     =The selected remote category was not found on WooCommerce.
+kreawooCategoryRemoteCreateFailed                                                                 =Failed to create the remote category on WooCommerce.
+kreawooCategoryRemoteDeleteFailed                                                                 =Failed to delete the remote category on WooCommerce. The correspondence was kept.
+kreawooCategoryDeleteAskRemote                                                                    =Also delete remote WooCommerce category?<br>Yes: delete remote category and correspondence.<br>No: delete only correspondence.
+
+kreawooCategoryRemoteReadPermissionLimited                                                      =Your WooCommerce API key cannot list/read categories. You can still map by remote ID manually and create remote categories.
+kreawooCategoryDownloadRemoteList                                                                =Download remote categories
+kreawooCategoryRemoteCacheUpdated                                                                =Remote categories cache updated (%s categories).
+kreawooCategoryRemoteCacheLoadedAt                                                              =Remote categories cache last update: %s
+kreawooCategoryRemoteCacheEmpty                                                                 =No remote category cache found. Click "Download remote categories".
+kreawooWoocommerceDeleteRemoteCategory                                                          =Unable to delete remote category %s on WooCommerce site '%s'.
